@@ -7,6 +7,8 @@ namespace Assets.Scripts.Players
 {
     public class PlayerToken : MonoBehaviour
     {
+        public bool Selected { get; private set; }
+
         private readonly List<Color> _colors = new List<Color>
         {
             Color.red,
@@ -20,6 +22,7 @@ namespace Assets.Scripts.Players
         public static PlayerToken CreatePlayerToken()
         {
             var baseObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            baseObject.AddComponent<Collider>();
 
             var playerToken = baseObject.AddComponent<PlayerToken>();
             
@@ -48,6 +51,20 @@ namespace Assets.Scripts.Players
             var materialColored = new Material(Shader.Find("Diffuse"));
             materialColored.color = _colors.GetRandomElement();
             GetComponent<Renderer>().material = materialColored;
+        }
+
+        private void OnMouseDown()
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.transform == this.transform)
+                {
+                    Selected = !Selected;
+                }
+            }
         }
     }
 }
