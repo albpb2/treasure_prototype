@@ -5,11 +5,11 @@ namespace Assets.Scripts.Extensions
 {
     public static class IListExtensions
     {
+        private static Random _random = new Random();
+
         public static T GetRandomElement<T>(this IList<T> collection)
         {
-            var random = new Random();
-
-            var index = random.Next(0, collection.Count);
+            var index = _random.Next(0, collection.Count);
 
             return collection[index];
         }
