@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Assets.Scripts;
 using UnityEngine;
 using UnityEditor;
 using Random = System.Random;
+using Assets.Scripts.Map;
+using Assets.Scripts;
 
 public class TileGenerator : UnityEditor.ScriptableWizard
 {
@@ -30,15 +29,29 @@ public class TileGenerator : UnityEditor.ScriptableWizard
 
     void OnWizardCreate()
     {
-        float x = 0;
-        float y = 0;
-
         _hexagonPrefabsResourcePaths = GetHexagonsPrefabsResourcePaths().ToList();
         _random = new Random();
 
-        for (var i = 0; i < _width; i ++)
+        PaintCells();
+    }
+
+    void OnWizardUpdate()
+    {
+        helpString = "Make width greater than height";
+    }
+
+    private void PaintCells()
+    {
+        float x = 0;
+        float y = 0;
+
+        GameObject cellsOrigin = new GameObject("Tiles");
+        cellsOrigin.transform.position = new Vector3(0, 0, 0);
+        cellsOrigin.tag = Tags.Tiles;
+
+        for (var i = 0; i < _width; i++)
         {
-            PaintColumn(x, y);
+            PaintColumn(x, y, cellsOrigin);
 
             if (i % 2 == 0)
             {
@@ -69,24 +82,28 @@ public class TileGenerator : UnityEditor.ScriptableWizard
         return hexagonPrefabsFileNames.Select(fileName => ResourcesPath + "/" + fileName);
     }
 
-    private void PaintColumn(float x, float startingY)
+    private void PaintColumn(float x, float startingY, GameObject cellsOrigin)
     {
         var y = startingY;
 
         for (var j = 0; j < _height; j++)
         {
-            PaintCell(x, y);
+            PaintCell(x, y, cellsOrigin);
 
             y += RowsCenterDistances * 2f;
         }
     }
 
-    private void PaintCell(float x, float y)
+    private void PaintCell(float x, float y, GameObject cellsOrigin)
     {
         var prefabIndex = _random.Next(0, _hexagonPrefabsResourcePaths.Count);
-        Instantiate(
+
+        var tileObject = Instantiate(
             Resources.Load(_hexagonPrefabsResourcePaths[prefabIndex], typeof(GameObject)),
             new Vector3(x, 0, y),
-            Quaternion.Euler(90, 0, 0));
+            Quaternion.Euler(90, 0, 0),
+            cellsOrigin.transform) as GameObject;
+
+        var tile = tileObject.AddComponent<Tile>();
     }
 }
