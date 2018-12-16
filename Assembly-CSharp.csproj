@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\Match\MatchManager.cs" />
     <Compile Include="Assets\Scripts\Players\PlayerToken.cs" />
     <Compile Include="Assets\Scripts\Tags.cs" />
+    <None Include="Assets\Shaders\SilouhettedDiffuse.shader" />
     <None Include="Assets\Shaders\SceneViewSelected.shader" />
     <None Include="Assets\Shaders\SceneViewSelected.txt" />
     <Reference Include="UnityEditor.StandardEvents">
