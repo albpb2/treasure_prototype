@@ -7,6 +7,9 @@ namespace Assets.Scripts.Players
 {
     public class PlayerToken : MonoBehaviour
     {
+        private Shader _originalShader;
+        private Shader _selectedShader;
+
         public bool Selected { get; private set; }
 
         private readonly List<Color> _colors = new List<Color>
@@ -53,6 +56,12 @@ namespace Assets.Scripts.Players
             GetComponent<Renderer>().material = materialColored;
         }
 
+        private void Awake()
+        {
+            _originalShader = GetComponent<Renderer>().material.shader;
+            _selectedShader = Shader.Find("Hidden/SceneViewSelected");
+        }
+
         private void OnMouseDown()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -63,7 +72,21 @@ namespace Assets.Scripts.Players
                 if (hit.transform == this.transform)
                 {
                     Selected = !Selected;
+                    UpdateShader();
                 }
+            }
+        }
+
+        private void UpdateShader()
+        {
+            var renderer = GetComponent<Renderer>();
+            if (!Selected)
+            {
+                renderer.material.shader = _originalShader;
+            }
+            else
+            {
+                renderer.material.shader = _selectedShader;
             }
         }
     }

@@ -67,6 +67,8 @@
     <Compile Include="Assets\Scripts\Match\MatchManager.cs" />
     <Compile Include="Assets\Scripts\Players\PlayerToken.cs" />
     <Compile Include="Assets\Scripts\Tags.cs" />
+    <None Include="Assets\Shaders\SceneViewSelected.shader" />
+    <None Include="Assets\Shaders\SceneViewSelected.txt" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>F:/Users/Alber/Documents/Unity/Treasure prototype/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
