@@ -64,17 +64,8 @@ namespace Assets.Scripts.Players
 
         private void OnMouseDown()
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.transform == this.transform)
-                {
-                    Selected = !Selected;
-                    UpdateShader();
-                }
-            }
+            Selected = !Selected;
+            UpdateShader();
         }
 
         private void UpdateShader()
