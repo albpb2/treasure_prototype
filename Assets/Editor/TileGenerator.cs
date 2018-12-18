@@ -104,7 +104,7 @@ public class TileGenerator : UnityEditor.ScriptableWizard
             Quaternion.Euler(90, 0, 0),
             cellsOrigin.transform) as GameObject;
 
-        tileObject.AddComponent<Tile>();
+        var tile = tileObject.AddComponent<Tile>();
         tileObject.AddComponent<MeshCollider>();
     }
 }

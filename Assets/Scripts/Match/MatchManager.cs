@@ -9,6 +9,10 @@ namespace Assets.Scripts.Match
     {
         private BoardManager _boardManager;
 
+        public PlayerToken PlayerToken { get; set; }
+
+        public Tile CurrentTile { get; set; }
+
         void Awake()
         {
             _boardManager = GameObject.FindObjectOfType<BoardManager>();
@@ -18,9 +22,9 @@ namespace Assets.Scripts.Match
         {
             var playerInitialPosition = _boardManager.Tiles.GetRandomElement();
 
-            var playerToken = PlayerToken.CreatePlayerToken();
+            PlayerToken = PlayerToken.CreatePlayerToken();
 
-            playerToken.MoveTo(playerInitialPosition);
+            PlayerToken.MoveTo(playerInitialPosition);
         }
     }
 }

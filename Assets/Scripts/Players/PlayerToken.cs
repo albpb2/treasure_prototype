@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Extensions;
 using Assets.Scripts.Map;
+using Assets.Scripts.Match;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -43,10 +44,13 @@ namespace Assets.Scripts.Players
 
             transform.position = tile.transform.position + new Vector3(0, HexagonHeight, 0);
 
-            if (!tile.IsUncovered)
-            {
-                tile.Uncover();
-            }
+            tile.Uncover();
+
+            ChangeSelection();
+
+            var matchManager = FindObjectOfType<MatchManager>();
+
+            matchManager.CurrentTile = tile;
         }
         
         private void SetRandomColor()
@@ -64,8 +68,7 @@ namespace Assets.Scripts.Players
 
         private void OnMouseDown()
         {
-            Selected = !Selected;
-            UpdateShader();
+            ChangeSelection();
         }
 
         private void UpdateShader()
@@ -79,6 +82,12 @@ namespace Assets.Scripts.Players
             {
                 renderer.material.shader = _selectedShader;
             }
+        }
+
+        private void ChangeSelection()
+        {
+            Selected = !Selected;
+            UpdateShader();
         }
     }
 }

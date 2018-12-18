@@ -1,14 +1,15 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Match;
+using UnityEngine;
 
 namespace Assets.Scripts.Map
 {
     public class Tile : MonoBehaviour
     {
+        public const float MaxCenterToCenterDistance = 1.73f;
+
         private Shader _originalShader;
         private Shader _selectedShader;
         private Renderer _renderer;
-
-        public Vector3 Center { get; set; }
 
         public bool IsUncovered { get; private set; }
 
@@ -22,9 +23,12 @@ namespace Assets.Scripts.Map
 
         public void Uncover()
         {
-            transform.Rotate(Vector3.down, 180);
+            if (!IsUncovered)
+            {
+                transform.Rotate(Vector3.down, 180);
 
-            IsUncovered = true;
+                IsUncovered = true;
+            }
         }
         
         private void OnMouseOver()
@@ -35,6 +39,21 @@ namespace Assets.Scripts.Map
         private void OnMouseExit()
         {
             _renderer.material.shader = _originalShader;
+        }
+
+        private void OnMouseDown()
+        {
+            var matchManager = FindObjectOfType<MatchManager>();
+
+            if (matchManager.PlayerToken.Selected && IsAdjacentTo(matchManager.CurrentTile))
+            {
+                matchManager.PlayerToken.MoveTo(this);
+            }
+        }
+
+        private bool IsAdjacentTo(Tile tile)
+        {
+            return (transform.position - tile.transform.position).magnitude < MaxCenterToCenterDistance * 1.2f;
         }
     }
 }
