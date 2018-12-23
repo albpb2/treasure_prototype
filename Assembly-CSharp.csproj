@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Commands\BaseCommand.cs" />
     <Compile Include="Assets\Scripts\Extensions\IListExtensions.cs" />
     <Compile Include="Assets\Scripts\Map\BoardManager.cs" />
     <Compile Include="Assets\Scripts\Map\Tile.cs" />
