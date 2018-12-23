@@ -61,12 +61,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\CommandHandlers\CommandBus.cs" />
+    <Compile Include="Assets\Scripts\CommandHandlers\CommandHandlerBase.cs" />
+    <Compile Include="Assets\Scripts\CommandHandlers\ICommandHandler.cs" />
+    <Compile Include="Assets\Scripts\CommandHandlers\MovePlayerCommandHandler.cs" />
     <Compile Include="Assets\Scripts\Commands\BaseCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\MovePlayerCommand.cs" />
     <Compile Include="Assets\Scripts\Extensions\IListExtensions.cs" />
     <Compile Include="Assets\Scripts\Map\BoardManager.cs" />
     <Compile Include="Assets\Scripts\Map\Tile.cs" />
-    <Compile Include="Assets\Scripts\Match\MatchManager.cs" />
     <Compile Include="Assets\Scripts\Players\PlayerToken.cs" />
     <Compile Include="Assets\Scripts\Tags.cs" />
     <None Include="Assets\Shaders\SilhouettedDiffuse.shader" />

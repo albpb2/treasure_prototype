@@ -4,6 +4,6 @@
     {
         public long PlayerId { get; set; }
 
-        public int MyProperty { get; set; }
+        public int TileId { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Extensions;
 using Assets.Scripts.Map;
-using Assets.Scripts.Match;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +11,10 @@ namespace Assets.Scripts.Players
         private Shader _selectedShader;
 
         public bool Selected { get; private set; }
+
+        public long PlayerId { get; set; }
+
+        public Tile Tile { get; set; }
 
         private readonly List<Color> _colors = new List<Color>
         {
@@ -48,9 +51,14 @@ namespace Assets.Scripts.Players
 
             ChangeSelection();
 
-            var matchManager = FindObjectOfType<MatchManager>();
+            if (Tile != null)
+            {
+                Tile.PlayerToken = null;
+            }
 
-            matchManager.CurrentTile = tile;
+            Tile = tile;
+
+            Tile.PlayerToken = this;
         }
         
         private void SetRandomColor()
@@ -64,6 +72,8 @@ namespace Assets.Scripts.Players
         {
             _originalShader = GetComponent<Renderer>().material.shader;
             _selectedShader = Shader.Find("Hidden/SceneViewSelected");
+
+            PlayerId = 0; // to-do: change to real id
         }
 
         private void OnMouseDown()

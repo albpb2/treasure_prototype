@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.Match;
+﻿using Assets.Scripts.CommandHandlers;
+using Assets.Scripts.Commands;
+using Assets.Scripts.Players;
 using UnityEngine;
 
 namespace Assets.Scripts.Map
@@ -7,13 +9,28 @@ namespace Assets.Scripts.Map
     {
         public const float MaxCenterToCenterDistance = 1.73f;
 
+        [SerializeField]
+        private int id;
+
         private Shader _originalShader;
         private Shader _selectedShader;
         private Renderer _renderer;
 
         public bool IsUncovered { get; private set; }
 
-        public int Id { get; set; }
+        public PlayerToken PlayerToken { get; set; }
+
+        public int Id
+        {
+            get
+            {
+                return id;
+            }
+            set
+            {
+                id = value;
+            }
+        }
 
         private void Awake()
         {
@@ -45,11 +62,24 @@ namespace Assets.Scripts.Map
 
         private void OnMouseDown()
         {
-            var matchManager = FindObjectOfType<MatchManager>();
-
-            if (matchManager.PlayerToken.Selected && IsAdjacentTo(matchManager.CurrentTile))
+            if (PlayerToken != null)
             {
-                matchManager.PlayerToken.MoveTo(this);
+                return;
+            }
+
+            var boardManager = FindObjectOfType<BoardManager>();
+
+            var playerToken = boardManager.FindPlayerToken(0);
+
+            if (playerToken.Selected && IsAdjacentTo(playerToken.Tile))
+            {
+                var commandBus = FindObjectOfType<CommandBus>();
+
+                commandBus.ExecuteInThisTurn(new MovePlayerCommand
+                {
+                    PlayerId = playerToken.PlayerId,
+                    TileId = Id
+                });
             }
         }
 
