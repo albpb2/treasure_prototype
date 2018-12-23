@@ -48,10 +48,11 @@ public class TileGenerator : UnityEditor.ScriptableWizard
         GameObject cellsOrigin = new GameObject("Tiles");
         cellsOrigin.transform.position = new Vector3(0, 0, 0);
         cellsOrigin.tag = Tags.Tiles;
+        var firstColumnTileId = 0;
 
         for (var i = 0; i < _width; i++)
         {
-            PaintColumn(x, y, cellsOrigin);
+            PaintColumn(x, y, cellsOrigin, firstColumnTileId);
 
             if (i % 2 == 0)
             {
@@ -62,6 +63,7 @@ public class TileGenerator : UnityEditor.ScriptableWizard
                 y = 0;
             }
             x += ColumnsCenterDistances / 2f;
+            firstColumnTileId += _height;
         }
 
         var a = 0;
@@ -82,19 +84,21 @@ public class TileGenerator : UnityEditor.ScriptableWizard
         return hexagonPrefabsFileNames.Select(fileName => ResourcesPath + "/" + fileName);
     }
 
-    private void PaintColumn(float x, float startingY, GameObject cellsOrigin)
+    private void PaintColumn(float x, float startingY, GameObject cellsOrigin, int firstTileId)
     {
         var y = startingY;
+        var tileId = firstTileId;
 
         for (var j = 0; j < _height; j++)
         {
-            PaintCell(x, y, cellsOrigin);
+            PaintCell(x, y, cellsOrigin, tileId);
 
             y += RowsCenterDistances * 2f;
+            tileId += 1;
         }
     }
 
-    private void PaintCell(float x, float y, GameObject cellsOrigin)
+    private void PaintCell(float x, float y, GameObject cellsOrigin, int id)
     {
         var prefabIndex = _random.Next(0, _hexagonPrefabsResourcePaths.Count);
 
@@ -106,5 +110,6 @@ public class TileGenerator : UnityEditor.ScriptableWizard
 
         var tile = tileObject.AddComponent<Tile>();
         tileObject.AddComponent<MeshCollider>();
+        tile.Id = id;
     }
 }

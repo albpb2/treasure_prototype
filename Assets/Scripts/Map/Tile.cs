@@ -13,6 +13,8 @@ namespace Assets.Scripts.Map
 
         public bool IsUncovered { get; private set; }
 
+        public int Id { get; set; }
+
         private void Awake()
         {
             IsUncovered = false;
