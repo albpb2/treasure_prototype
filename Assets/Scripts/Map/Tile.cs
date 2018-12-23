@@ -53,7 +53,8 @@ namespace Assets.Scripts.Map
 
         private bool IsAdjacentTo(Tile tile)
         {
-            return (transform.position - tile.transform.position).magnitude < MaxCenterToCenterDistance * 1.2f;
+            const float AdjacencyDistanceMargin = 0.2f;
+            return Vector3.Distance(transform.position, tile.transform.position) < MaxCenterToCenterDistance * (1 + AdjacencyDistanceMargin);
         }
     }
 }
