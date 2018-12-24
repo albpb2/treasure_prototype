@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.CommandHandlers;
 using Assets.Scripts.Commands;
+using Assets.Scripts.Match;
 using Assets.Scripts.Players;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace Assets.Scripts.Map
         private Shader _originalShader;
         private Shader _selectedShader;
         private Renderer _renderer;
+        private MatchManager _matchManager;
 
         public bool IsUncovered { get; private set; }
 
@@ -32,12 +34,13 @@ namespace Assets.Scripts.Map
             }
         }
 
-        private void Awake()
+        public void Awake()
         {
             IsUncovered = false;
             _originalShader = GetComponent<Renderer>().material.shader;
             _selectedShader = Shader.Find("Outlined/Silhouetted Diffuse");
             _renderer = GetComponent<Renderer>();
+            _matchManager = FindObjectOfType<MatchManager>();
         }
 
         public void Uncover()
@@ -52,17 +55,23 @@ namespace Assets.Scripts.Map
         
         private void OnMouseOver()
         {
-            _renderer.material.shader = _selectedShader;
+            if (!_matchManager.Pause)
+            {
+                _renderer.material.shader = _selectedShader;
+            }
         }
 
         private void OnMouseExit()
         {
-            _renderer.material.shader = _originalShader;
+            if (!_matchManager.Pause)
+            {
+                _renderer.material.shader = _originalShader;
+            }
         }
 
         private void OnMouseDown()
         {
-            if (PlayerToken != null)
+            if (PlayerToken != null || _matchManager.Pause)
             {
                 return;
             }

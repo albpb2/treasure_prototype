@@ -16,11 +16,15 @@ namespace Assets.Scripts.Match
 
         public int CurrentPlayer { get; set; }
 
+        public bool Pause { get; set; }
+
         public void Awake()
         {
             _boardManager = FindObjectOfType<BoardManager>();
 
             _playersIds = new List<long>();
+
+            Pause = true;
         }
 
         public void CreatePlayers()
@@ -40,6 +44,8 @@ namespace Assets.Scripts.Match
                 var numberOfPlayersPanel = GameObject.Find("NumberOfPlayersPanel");
 
                 numberOfPlayersPanel.SetActive(false);
+
+                Pause = false;
             }
         }
     }
