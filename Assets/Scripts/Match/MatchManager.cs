@@ -1,6 +1,8 @@
-﻿using Assets.Scripts.Map;
+﻿using Assets.Scripts.Extensions;
+using Assets.Scripts.Map;
 using Assets.Scripts.Players;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,11 +12,25 @@ namespace Assets.Scripts.Match
     {
         private const int MinNumberOfPlayers = 1;
         private const int MaxNumberOfPlayers = 4;
-
+        
         private List<long> _playersIds;
         private BoardManager _boardManager;
+        private int _currentPlayerIndex;
 
-        public int CurrentPlayer { get; set; }
+        public int CurrentPlayer
+        {
+            get
+            {
+                return _currentPlayerIndex;
+            }
+            set
+            {
+                _currentPlayerIndex = value;
+                CurrentPlayerId = _playersIds[_currentPlayerIndex];
+            }
+        }
+
+        public long CurrentPlayerId { get; set; }
 
         public bool Pause { get; set; }
 
@@ -42,6 +58,8 @@ namespace Assets.Scripts.Match
 
                 Pause = false;
             }
+
+            CurrentPlayer = Enumerable.Range(0, numberOfPlayers).ToList().GetRandomElement();
         }
 
         private int GetNumberOfPlayers()
@@ -55,6 +73,11 @@ namespace Assets.Scripts.Match
             }
 
             return numberOfPlayers;
+        }
+
+        public void SwitchCurrentPlayer()
+        {
+            CurrentPlayer = (CurrentPlayer + 1) % _playersIds.Count;
         }
 
         private bool IsNumberOfPlayersCorrect(int numberOfPlayers)

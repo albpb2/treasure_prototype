@@ -78,7 +78,7 @@ namespace Assets.Scripts.Map
 
             var boardManager = FindObjectOfType<BoardManager>();
 
-            var playerToken = boardManager.FindPlayerToken(0);
+            var playerToken = boardManager.FindPlayerToken(_matchManager.CurrentPlayerId);
 
             if (playerToken.Selected && IsAdjacentTo(playerToken.Tile))
             {

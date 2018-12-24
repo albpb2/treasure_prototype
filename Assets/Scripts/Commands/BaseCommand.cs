@@ -2,5 +2,6 @@
 {
     public class BaseCommand
     {
+        public long PlayerId { get; set; }
     }
 }

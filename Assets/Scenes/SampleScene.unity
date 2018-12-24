@@ -2681,7 +2681,7 @@ GameObject:
   - component: {fileID: 564526733}
   - component: {fileID: 564526732}
   m_Layer: 5
-  m_Name: ResetTurnButton
+  m_Name: EndTurnButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2746,7 +2746,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1202922581}
-        m_MethodName: ResetTurn
+        m_MethodName: EndTurn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7335,7 +7335,7 @@ GameObject:
   - component: {fileID: 2132172285}
   - component: {fileID: 2132172284}
   m_Layer: 5
-  m_Name: Reset turn
+  m_Name: End turn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7391,7 +7391,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Reset turn
+  m_Text: 'End turn
+
+'
 --- !u!222 &2132172285
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Extensions;
 using Assets.Scripts.Map;
+using Assets.Scripts.Match;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -69,7 +70,7 @@ namespace Assets.Scripts.Players
             Tile.PlayerToken = this;
         }
 
-        private void ChangeSelection()
+        public void ChangeSelection()
         {
             Selected = !Selected;
             UpdateShader();
@@ -92,7 +93,12 @@ namespace Assets.Scripts.Players
 
         private void OnMouseDown()
         {
-            ChangeSelection();
+            var matchManager = FindObjectOfType<MatchManager>();
+
+            if (matchManager.CurrentPlayerId == PlayerId)
+            {
+                ChangeSelection();
+            }
         }
 
         private void UpdateShader()
