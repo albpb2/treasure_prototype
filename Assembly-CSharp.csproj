@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\Extensions\IListExtensions.cs" />
     <Compile Include="Assets\Scripts\Map\BoardManager.cs" />
     <Compile Include="Assets\Scripts\Map\Tile.cs" />
+    <Compile Include="Assets\Scripts\Match\TurnManager.cs" />
     <Compile Include="Assets\Scripts\Players\PlayerToken.cs" />
     <Compile Include="Assets\Scripts\Tags.cs" />
     <None Include="Assets\Shaders\SilhouettedDiffuse.shader" />
