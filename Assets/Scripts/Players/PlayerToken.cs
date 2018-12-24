@@ -18,6 +18,8 @@ namespace Assets.Scripts.Players
 
         public Tile Tile { get; set; }
 
+        public Color Color { get; set; }
+
         private readonly List<Color> _colors = new List<Color>
         {
             Color.red,
@@ -79,7 +81,8 @@ namespace Assets.Scripts.Players
         private void SetRandomColor()
         {
             var materialColored = new Material(Shader.Find("Diffuse"));
-            materialColored.color = GetRandomColor();
+            Color = GetRandomColor();
+            materialColored.color = Color;
             GetComponent<Renderer>().material = materialColored;
         }
 
@@ -134,7 +137,7 @@ namespace Assets.Scripts.Players
         {
             var tokens = FindObjectsOfType<PlayerToken>();
 
-            return tokens.Select(token => token.GetComponent<Renderer>().material.color);
+            return tokens.Select(token => token.Color);
         }
 
         private void ResetSelected()

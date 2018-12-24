@@ -16,6 +16,7 @@ namespace Assets.Scripts.Match
         private List<long> _playersIds;
         private BoardManager _boardManager;
         private int _currentPlayerIndex;
+        private PlayerInfoPanel _playerInfoPanel;
 
         public int CurrentPlayer
         {
@@ -27,6 +28,7 @@ namespace Assets.Scripts.Match
             {
                 _currentPlayerIndex = value;
                 CurrentPlayerId = _playersIds[_currentPlayerIndex];
+                _playerInfoPanel.SetPlayerInfo(_boardManager.FindPlayerToken(CurrentPlayerId));
             }
         }
 
@@ -37,6 +39,7 @@ namespace Assets.Scripts.Match
         public void Awake()
         {
             _boardManager = FindObjectOfType<BoardManager>();
+            _playerInfoPanel = FindObjectOfType<PlayerInfoPanel>();
 
             _playersIds = new List<long>();
 
