@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Extensions;
 using Assets.Scripts.Map;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.Players
@@ -77,7 +78,7 @@ namespace Assets.Scripts.Players
         private void SetRandomColor()
         {
             var materialColored = new Material(Shader.Find("Diffuse"));
-            materialColored.color = _colors.GetRandomElement();
+            materialColored.color = GetRandomColor();
             GetComponent<Renderer>().material = materialColored;
         }
 
@@ -105,6 +106,27 @@ namespace Assets.Scripts.Players
             {
                 renderer.material.shader = _selectedShader;
             }
+        }
+
+        private Color GetRandomColor()
+        {
+            var usedColors = GetUsedColors().ToList();
+
+            var color = _colors.GetRandomElement();
+
+            while (usedColors.Contains(color))
+            {
+                color = _colors.GetRandomElement();
+            }
+
+            return color;
+        }
+
+        private IEnumerable<Color> GetUsedColors()
+        {
+            var tokens = FindObjectsOfType<PlayerToken>();
+
+            return tokens.Select(token => token.GetComponent<Renderer>().material.color);
         }
     }
 }

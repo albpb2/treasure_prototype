@@ -42,12 +42,22 @@ namespace Assets.Scripts.Map
 
         public void CreatePlayerToken(long playerId)
         {
-            var playerInitialPosition = Tiles.GetRandomElement();
-
             var playerToken = PlayerToken.CreatePlayerToken(playerId);
             PlayerTokens.Add(playerToken);
 
-            playerToken.PlaceAt(playerInitialPosition);
+            playerToken.PlaceAt(GetRandomEmptyTile());
+        }
+
+        private Tile GetRandomEmptyTile()
+        {
+            var playerInitialPosition = Tiles.GetRandomElement();
+
+            while (playerInitialPosition.PlayerToken != null)
+            {
+                playerInitialPosition = Tiles.GetRandomElement();
+            }
+
+            return playerInitialPosition;
         }
     }
 }
