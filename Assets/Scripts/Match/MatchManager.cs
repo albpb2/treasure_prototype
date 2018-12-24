@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Extensions;
+﻿using Assets.Scripts.Camera;
+using Assets.Scripts.Extensions;
 using Assets.Scripts.Map;
 using Assets.Scripts.Players;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace Assets.Scripts.Match
         private BoardManager _boardManager;
         private int _currentPlayerIndex;
         private PlayerInfoPanel _playerInfoPanel;
+        private PlayerBoardCamera _playerBoardCamera;
 
         public int CurrentPlayer
         {
@@ -28,7 +30,11 @@ namespace Assets.Scripts.Match
             {
                 _currentPlayerIndex = value;
                 CurrentPlayerId = _playersIds[_currentPlayerIndex];
-                _playerInfoPanel.SetPlayerInfo(_boardManager.FindPlayerToken(CurrentPlayerId));
+
+                var currentPlayerToken = _boardManager.FindPlayerToken(CurrentPlayerId);
+
+                _playerInfoPanel.SetPlayerInfo(currentPlayerToken);
+                _playerBoardCamera.AimAtPlayerToken(currentPlayerToken);
             }
         }
 
@@ -40,6 +46,7 @@ namespace Assets.Scripts.Match
         {
             _boardManager = FindObjectOfType<BoardManager>();
             _playerInfoPanel = FindObjectOfType<PlayerInfoPanel>();
+            _playerBoardCamera = FindObjectOfType<PlayerBoardCamera>();
 
             _playersIds = new List<long>();
 
