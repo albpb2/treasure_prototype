@@ -25,6 +25,8 @@ namespace Assets.Scripts.CommandHandlers
             _commandHandlers = new Dictionary<Type, CommandHandlerBase>();
             
             TurnCommands = new List<BaseCommand>();
+
+            TurnManager.onTurnReset += ResetTurnCommands;
         }
 
         public void Start()
@@ -59,6 +61,11 @@ namespace Assets.Scripts.CommandHandlers
             var commandHandler = (ICommandHandler<TCommand>)_commandHandlers[command.GetType()];
 
             commandHandler.Execute(command);
+        }
+
+        private void ResetTurnCommands()
+        {
+            TurnCommands = new List<BaseCommand>();
         }
     }
 }

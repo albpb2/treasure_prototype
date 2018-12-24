@@ -10,6 +10,9 @@ namespace Assets.Scripts.Match
 
         public bool HasTurnBeenPlayed { get; private set; }
 
+        public delegate void TurnReset();
+        public static event TurnReset onTurnReset;
+
         public void Awake()
         {
             _boardManager = FindObjectOfType<BoardManager>();
@@ -18,17 +21,11 @@ namespace Assets.Scripts.Match
 
         public void EndTurn()
         {
-            foreach(var playerToken in _boardManager.PlayerTokens)
-            {
-                if (playerToken.Selected)
-                {
-                    playerToken.ChangeSelection();
-                }
-            }
+            HasTurnBeenPlayed = false;
 
             _matchManager.SwitchCurrentPlayer();
 
-            HasTurnBeenPlayed = false;
+            onTurnReset();
         }
 
         public void PlayTurn()

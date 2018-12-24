@@ -83,12 +83,14 @@ namespace Assets.Scripts.Players
             GetComponent<Renderer>().material = materialColored;
         }
 
-        private void Awake()
+        public void Awake()
         {
             _originalShader = GetComponent<Renderer>().material.shader;
             _selectedShader = Shader.Find("Hidden/SceneViewSelected");
 
             PlayerId = 0; // to-do: change to real id
+
+            TurnManager.onTurnReset += ResetSelected;
         }
 
         private void OnMouseDown()
@@ -133,6 +135,11 @@ namespace Assets.Scripts.Players
             var tokens = FindObjectsOfType<PlayerToken>();
 
             return tokens.Select(token => token.GetComponent<Renderer>().material.color);
+        }
+
+        private void ResetSelected()
+        {
+            Selected = false;
         }
     }
 }
