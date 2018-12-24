@@ -30,16 +30,6 @@ namespace Assets.Scripts.Map
             PlayerTokens = new List<PlayerToken>();
         }
 
-        private void Start()
-        {
-            var playerInitialPosition = Tiles.GetRandomElement();
-
-            var playerToken = PlayerToken.CreatePlayerToken();
-            PlayerTokens.Add(playerToken);
-
-            playerToken.MoveTo(playerInitialPosition);
-        }
-
         public PlayerToken FindPlayerToken(long playerId)
         {
             return PlayerTokens.FirstOrDefault(playerToken => playerToken.PlayerId == playerId);
@@ -48,6 +38,16 @@ namespace Assets.Scripts.Map
         public Tile FindTile(int tileId)
         {
             return Tiles.FirstOrDefault(tile => tile.Id == tileId);
+        }
+
+        public void CreatePlayerToken(long playerId)
+        {
+            var playerInitialPosition = Tiles.GetRandomElement();
+
+            var playerToken = PlayerToken.CreatePlayerToken(playerId);
+            PlayerTokens.Add(playerToken);
+
+            playerToken.MoveTo(playerInitialPosition);
         }
     }
 }

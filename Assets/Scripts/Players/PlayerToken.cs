@@ -26,7 +26,7 @@ namespace Assets.Scripts.Players
             Color.yellow
         };
 
-        public static PlayerToken CreatePlayerToken()
+        public static PlayerToken CreatePlayerToken(long playerId)
         {
             var baseObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
             baseObject.AddComponent<Collider>();
@@ -37,6 +37,8 @@ namespace Assets.Scripts.Players
             playerToken.transform.localScale *= TokenScale;
 
             playerToken.SetRandomColor();
+
+            playerToken.PlayerId = playerId;
 
             return playerToken;
         }
