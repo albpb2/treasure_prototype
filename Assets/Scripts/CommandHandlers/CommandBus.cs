@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Commands;
 using Assets.Scripts.Map;
+using Assets.Scripts.Match;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,12 +11,14 @@ namespace Assets.Scripts.CommandHandlers
     {
         private BoardManager _boardManager;
         private Dictionary<Type, CommandHandlerBase> _commandHandlers;
+        private TurnManager _turnManager;
 
         public List<BaseCommand> TurnCommands { get; set; }
 
         public void Awake()
         {
             _boardManager = FindObjectOfType<BoardManager>();
+            _turnManager = FindObjectOfType<TurnManager>();
 
             _commandHandlers = new Dictionary<Type, CommandHandlerBase>();
             
@@ -29,9 +32,14 @@ namespace Assets.Scripts.CommandHandlers
 
         public void ExecuteInThisTurn<TCommand>(TCommand command) where TCommand : BaseCommand
         {
-            TurnCommands.Add(command);
+            if (!_turnManager.HasTurnBeenPlayed)
+            {
+                TurnCommands.Add(command);
 
-            Execute(command);
+                Execute(command);
+
+                _turnManager.PlayTurn();
+            }
         }
 
         public void ExecuteFromPreviousTurn<TCommand>(TCommand command) where TCommand : BaseCommand
