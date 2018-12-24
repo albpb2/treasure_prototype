@@ -25,7 +25,7 @@ namespace Assets.Scripts.Match
 
         public void CreatePlayers()
         {
-            var numberOfPlayersText = GameObject.Find("NumberOfPlayers").GetComponent<Text>();
+            var numberOfPlayersText = GameObject.Find("NumberOfPlayersText").GetComponent<Text>();
             int numberOfPlayers = 0;
 
             if (numberOfPlayersText != null && int.TryParse(numberOfPlayersText.text, out numberOfPlayers) 
