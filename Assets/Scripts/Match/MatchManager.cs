@@ -29,24 +29,50 @@ namespace Assets.Scripts.Match
 
         public void CreatePlayers()
         {
-            var numberOfPlayersText = GameObject.Find("NumberOfPlayersText").GetComponent<Text>();
-            int numberOfPlayers = 0;
+            var numberOfPlayers = GetNumberOfPlayers();
 
-            if (numberOfPlayersText != null && int.TryParse(numberOfPlayersText.text, out numberOfPlayers) 
-                && numberOfPlayers >= MinNumberOfPlayers && numberOfPlayers <= MaxNumberOfPlayers)
+            if (IsNumberOfPlayersCorrect(numberOfPlayers))
             {
                 for (var i = 0; i < numberOfPlayers; i++)
                 {
-                    _playersIds.Add(i);
-                    _boardManager.CreatePlayerToken(i);
+                    CreatePlayer(i);
                 }
 
-                var numberOfPlayersPanel = GameObject.Find("NumberOfPlayersPanel");
-
-                numberOfPlayersPanel.SetActive(false);
+                DisableNumberOfPlayersPanel();
 
                 Pause = false;
             }
+        }
+
+        private int GetNumberOfPlayers()
+        {
+            var numberOfPlayersText = GameObject.Find("NumberOfPlayersText").GetComponent<Text>();
+            int numberOfPlayers = 0;
+
+            if (numberOfPlayersText != null)
+            {
+                int.TryParse(numberOfPlayersText.text, out numberOfPlayers);
+            }
+
+            return numberOfPlayers;
+        }
+
+        private bool IsNumberOfPlayersCorrect(int numberOfPlayers)
+        {
+            return numberOfPlayers >= MinNumberOfPlayers && numberOfPlayers <= MaxNumberOfPlayers;
+        }
+
+        private void CreatePlayer(int playerId)
+        {
+            _playersIds.Add(playerId);
+            _boardManager.CreatePlayerToken(playerId);
+        }
+
+        private void DisableNumberOfPlayersPanel()
+        {
+            var numberOfPlayersPanel = GameObject.Find("NumberOfPlayersPanel");
+
+            numberOfPlayersPanel.SetActive(false);
         }
     }
 }
