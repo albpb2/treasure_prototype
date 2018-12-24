@@ -36,6 +36,10 @@ namespace Assets.Scripts.Match
                     _playersIds.Add(i);
                     _boardManager.CreatePlayerToken(i);
                 }
+
+                var numberOfPlayersPanel = GameObject.Find("NumberOfPlayersPanel");
+
+                numberOfPlayersPanel.SetActive(false);
             }
         }
     }
