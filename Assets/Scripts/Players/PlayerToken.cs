@@ -45,13 +45,18 @@ namespace Assets.Scripts.Players
 
         public void MoveTo(Tile tile)
         {
+            PlaceAt(tile);
+
+            ChangeSelection();
+        }
+
+        public void PlaceAt(Tile tile)
+        {
             const float HexagonHeight = 0.367f;
 
             transform.position = tile.transform.position + new Vector3(0, HexagonHeight, 0);
 
             tile.Uncover();
-
-            ChangeSelection();
 
             if (Tile != null)
             {
@@ -62,7 +67,13 @@ namespace Assets.Scripts.Players
 
             Tile.PlayerToken = this;
         }
-        
+
+        private void ChangeSelection()
+        {
+            Selected = !Selected;
+            UpdateShader();
+        }
+
         private void SetRandomColor()
         {
             var materialColored = new Material(Shader.Find("Diffuse"));
@@ -94,12 +105,6 @@ namespace Assets.Scripts.Players
             {
                 renderer.material.shader = _selectedShader;
             }
-        }
-
-        private void ChangeSelection()
-        {
-            Selected = !Selected;
-            UpdateShader();
         }
     }
 }

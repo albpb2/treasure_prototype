@@ -47,7 +47,7 @@ namespace Assets.Scripts.Map
             var playerToken = PlayerToken.CreatePlayerToken(playerId);
             PlayerTokens.Add(playerToken);
 
-            playerToken.MoveTo(playerInitialPosition);
+            playerToken.PlaceAt(playerInitialPosition);
         }
     }
 }
