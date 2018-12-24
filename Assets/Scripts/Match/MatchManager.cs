@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Camera;
-using Assets.Scripts.Extensions;
+﻿using Assets.Scripts.Extensions;
 using Assets.Scripts.Map;
 using Assets.Scripts.Players;
 using System.Collections.Generic;
@@ -18,7 +17,6 @@ namespace Assets.Scripts.Match
         private BoardManager _boardManager;
         private int _currentPlayerIndex;
         private PlayerInfoPanel _playerInfoPanel;
-        private PlayerBoardCamera _playerBoardCamera;
 
         public int CurrentPlayer
         {
@@ -31,22 +29,31 @@ namespace Assets.Scripts.Match
                 _currentPlayerIndex = value;
                 CurrentPlayerId = _playersIds[_currentPlayerIndex];
 
-                var currentPlayerToken = _boardManager.FindPlayerToken(CurrentPlayerId);
+                CurrentPlayerToken = _boardManager.FindPlayerToken(CurrentPlayerId);
 
-                _playerInfoPanel.SetPlayerInfo(currentPlayerToken);
-                _playerBoardCamera.AimAtPlayerToken(currentPlayerToken);
+                _playerInfoPanel.SetPlayerInfo(CurrentPlayerToken);
+
+                if (onCurrentPlayerChanged != null)
+                {
+                    onCurrentPlayerChanged();
+                }
             }
         }
 
         public long CurrentPlayerId { get; set; }
 
+        public PlayerToken CurrentPlayerToken { get; set; }
+
         public bool Pause { get; set; }
+
+        public delegate void PlayerChange();
+
+        public static event PlayerChange onCurrentPlayerChanged;
 
         public void Awake()
         {
             _boardManager = FindObjectOfType<BoardManager>();
             _playerInfoPanel = FindObjectOfType<PlayerInfoPanel>();
-            _playerBoardCamera = FindObjectOfType<PlayerBoardCamera>();
 
             _playersIds = new List<long>();
 

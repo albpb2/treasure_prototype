@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Players;
+﻿using Assets.Scripts.Match;
+using Assets.Scripts.Players;
 using UnityEngine;
 
 namespace Assets.Scripts.Camera
@@ -6,10 +7,13 @@ namespace Assets.Scripts.Camera
     public class PlayerBoardCamera : MonoBehaviour
     {
         private UnityEngine.Camera _camera;
+        private MatchManager _matchManager;
 
         public void Awake()
         {
             _camera = GameObject.Find("Main Camera").GetComponent<UnityEngine.Camera>();
+            _matchManager = FindObjectOfType<MatchManager>();
+            MatchManager.onCurrentPlayerChanged += AimAtCurrentPlayerToken;
         }
 
         public void AimAtPlayerToken(PlayerToken playerToken)
@@ -23,6 +27,11 @@ namespace Assets.Scripts.Camera
             var z = playerToken.transform.position.z + DistanceToPlayerZ;
 
             _camera.transform.position = new Vector3(x, y, z);
+        }
+
+        public void AimAtCurrentPlayerToken()
+        {
+            AimAtPlayerToken(_matchManager.CurrentPlayerToken);
         }
     }
 }
