@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Input;
+using Assets.Scripts.Match;
 using UnityEngine;
 
 public class CameraDrag : MonoBehaviour
@@ -8,14 +9,21 @@ public class CameraDrag : MonoBehaviour
 
     private Space _movementSpace = Space.World;
     private InputManager _inputManager;
+    private MatchManager _matchManager;
 
     public void Awake()
     {
         _inputManager = FindObjectOfType<InputManager>();
+        _matchManager = FindObjectOfType<MatchManager>();
     }
 
     public void Update()
     {
+        if (_matchManager.Pause)
+        {
+            return;
+        }
+
         if (_inputManager.RightPressed)
         {
             transform.Translate(Vector3.right * dragSpeed, _movementSpace);

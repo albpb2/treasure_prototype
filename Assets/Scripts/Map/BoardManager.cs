@@ -17,14 +17,20 @@ namespace Assets.Scripts.Map
 
             if (cellsSet == null)
             {
-                throw new System.Exception("Tiles collection not found");
+                var boardGenerator = new BoardGenerator();
+                boardGenerator.PaintBoard();
+
+                cellsSet = GameObject.FindGameObjectWithTag(Tags.Tiles);
             }
 
             Tiles = cellsSet.GetComponentsInChildren<Tile>().ToList();
 
             if (Tiles.Count == 0)
             {
-                throw new System.Exception("Empty tiles collection");
+                var boardGenerator = new BoardGenerator();
+                boardGenerator.PaintBoard();
+
+                Tiles = cellsSet.GetComponentsInChildren<Tile>().ToList();
             }
 
             PlayerTokens = new List<PlayerToken>();
