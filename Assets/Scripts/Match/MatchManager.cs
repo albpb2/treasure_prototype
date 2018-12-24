@@ -12,11 +12,17 @@ namespace Assets.Scripts.Match
     {
         private const int MinNumberOfPlayers = 1;
         private const int MaxNumberOfPlayers = 4;
-        
+
+        [SerializeField]
+        private PlayerInfoPanel _playerInfoPanel;
+        [SerializeField]
+        private GameObject _numberOfPlayersPanel;
+        [SerializeField]
+        private Text _numberOfPlayersText;
+
         private List<long> _playersIds;
         private BoardManager _boardManager;
         private int _currentPlayerIndex;
-        private PlayerInfoPanel _playerInfoPanel;
 
         public int CurrentPlayer
         {
@@ -53,40 +59,45 @@ namespace Assets.Scripts.Match
         public void Awake()
         {
             _boardManager = FindObjectOfType<BoardManager>();
-            _playerInfoPanel = FindObjectOfType<PlayerInfoPanel>();
 
             _playersIds = new List<long>();
 
             Pause = true;
         }
 
-        public void CreatePlayers()
+        public void StartMatch()
         {
             var numberOfPlayers = GetNumberOfPlayers();
 
             if (IsNumberOfPlayersCorrect(numberOfPlayers))
             {
-                for (var i = 0; i < numberOfPlayers; i++)
-                {
-                    CreatePlayer(i);
-                }
+                CreatePlayers(numberOfPlayers);
 
                 DisableNumberOfPlayersPanel();
 
+                EnablePlayerInfoPanel();
+
+                CurrentPlayer = Enumerable.Range(0, numberOfPlayers).ToList().GetRandomElement();
+
                 Pause = false;
             }
+        }
 
-            CurrentPlayer = Enumerable.Range(0, numberOfPlayers).ToList().GetRandomElement();
+        public void CreatePlayers(int numberOfPlayers)
+        {
+            for (var i = 0; i < numberOfPlayers; i++)
+            {
+                CreatePlayer(i);
+            }
         }
 
         private int GetNumberOfPlayers()
         {
-            var numberOfPlayersText = GameObject.Find("NumberOfPlayersText").GetComponent<Text>();
             int numberOfPlayers = 0;
 
-            if (numberOfPlayersText != null)
+            if (_numberOfPlayersText != null)
             {
-                int.TryParse(numberOfPlayersText.text, out numberOfPlayers);
+                int.TryParse(_numberOfPlayersText.text, out numberOfPlayers);
             }
 
             return numberOfPlayers;
@@ -108,11 +119,14 @@ namespace Assets.Scripts.Match
             _boardManager.CreatePlayerToken(playerId);
         }
 
+        private void EnablePlayerInfoPanel()
+        {
+            _playerInfoPanel.gameObject.SetActive(true);
+        }
+
         private void DisableNumberOfPlayersPanel()
         {
-            var numberOfPlayersPanel = GameObject.Find("NumberOfPlayersPanel");
-
-            numberOfPlayersPanel.SetActive(false);
+            _numberOfPlayersPanel.SetActive(false);
         }
     }
 }
