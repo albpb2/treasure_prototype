@@ -69,6 +69,8 @@
     <Compile Include="Assets\Scripts\CommandHandlers\MovePlayerCommandHandler.cs" />
     <Compile Include="Assets\Scripts\Commands\BaseCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\MovePlayerCommand.cs" />
+    <Compile Include="Assets\Scripts\DB\DbManager.cs" />
+    <Compile Include="Assets\Scripts\DB\Documents\MatchDocument.cs" />
     <Compile Include="Assets\Scripts\Extensions\IListExtensions.cs" />
     <Compile Include="Assets\Scripts\Input\InputManager.cs" />
     <Compile Include="Assets\Scripts\Map\BoardGenerator.cs" />
@@ -297,6 +299,18 @@
     </Reference>
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>C:/Users/alber/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.13/UnityEngine.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.SecurityToken">
+      <HintPath>F:/Users/Alber/Documents/Unity/Treasure prototype/Assets/AWSSDK/AWSSDK.SecurityToken.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.CognitoIdentity">
+      <HintPath>F:/Users/Alber/Documents/Unity/Treasure prototype/Assets/AWSSDK/AWSSDK.CognitoIdentity.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.DynamoDBv2">
+      <HintPath>F:/Users/Alber/Documents/Unity/Treasure prototype/Assets/AWSSDK/AWSSDK.DynamoDBv2.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.Core">
+      <HintPath>F:/Users/Alber/Documents/Unity/Treasure prototype/Assets/AWSSDK/AWSSDK.Core.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.2.19f1/Editor/Data/MonoBleedingEdge/lib/mono/unity/mscorlib.dll</HintPath>
