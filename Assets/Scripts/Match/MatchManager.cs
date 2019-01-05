@@ -22,7 +22,6 @@ namespace Assets.Scripts.Match
         [SerializeField]
         private Text _numberOfPlayersText;
 
-        private List<long> _playersIds;
         private BoardManager _boardManager;
         private MatchStatusSaver _matchStatusSaver;
         private int _currentPlayerIndex;
@@ -36,7 +35,7 @@ namespace Assets.Scripts.Match
             set
             {
                 _currentPlayerIndex = value;
-                CurrentPlayerId = _playersIds[_currentPlayerIndex];
+                CurrentPlayerId = PlayerIds[_currentPlayerIndex];
 
                 CurrentPlayerToken = _boardManager.FindPlayerToken(CurrentPlayerId);
 
@@ -55,12 +54,7 @@ namespace Assets.Scripts.Match
 
         public bool Pause { get; set; }
 
-        public List<long> PlayerIds {
-            get
-            {
-                return _playersIds;
-            }
-        }
+        public List<long> PlayerIds { get; set; }
 
         public string MatchId { get; set; }
 
@@ -73,7 +67,7 @@ namespace Assets.Scripts.Match
             _boardManager = FindObjectOfType<BoardManager>();
             _matchStatusSaver = new MatchStatusSaver(_boardManager, this);
 
-            _playersIds = new List<long>();
+            PlayerIds = new List<long>();
 
             Pause = true;
 
@@ -120,7 +114,7 @@ namespace Assets.Scripts.Match
 
         public void SwitchCurrentPlayer()
         {
-            CurrentPlayer = (CurrentPlayer + 1) % _playersIds.Count;
+            CurrentPlayer = (CurrentPlayer + 1) % PlayerIds.Count;
         }
 
         public void SaveStatus()
@@ -135,7 +129,7 @@ namespace Assets.Scripts.Match
 
         private void CreatePlayer(int playerId)
         {
-            _playersIds.Add(playerId);
+            PlayerIds.Add(playerId);
             _boardManager.CreatePlayerToken(playerId);
         }
 
