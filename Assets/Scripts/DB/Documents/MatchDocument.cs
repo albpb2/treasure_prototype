@@ -9,5 +9,7 @@ namespace Assets.Scripts.DB.Documents
         public string MatchId { get; set; }
         [DynamoDBProperty]
         public string StateJson { get; set; }
+        [DynamoDBVersion]
+        public int? Version { get; set; }
     }
 }

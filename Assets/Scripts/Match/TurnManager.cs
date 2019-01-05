@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.DB;
 using Assets.Scripts.DB.Documents;
 using Assets.Scripts.Map;
+using Assets.Scripts.Match.Status;
 using System;
 using UnityEngine;
 
@@ -30,16 +31,7 @@ namespace Assets.Scripts.Match
 
             onTurnReset();
 
-            DbManager.instance.Context.SaveAsync(new MatchDocument
-            {
-                MatchId = Guid.NewGuid().ToString(),
-                StateJson = Guid.NewGuid().ToString(),
-            }, (result)=>{
-                if (result.Exception == null)
-                    Debug.Log("Status saved.");
-                else
-                    Debug.Log(result.Exception);
-            });
+            _matchManager.SaveStatus();
         }
 
         public void PlayTurn()

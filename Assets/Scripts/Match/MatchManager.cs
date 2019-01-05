@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts.Extensions;
 using Assets.Scripts.Map;
+using Assets.Scripts.Match.Status;
 using Assets.Scripts.Players;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -22,6 +24,7 @@ namespace Assets.Scripts.Match
 
         private List<long> _playersIds;
         private BoardManager _boardManager;
+        private MatchStatusSaver _matchStatusSaver;
         private int _currentPlayerIndex;
 
         public int CurrentPlayer
@@ -52,6 +55,15 @@ namespace Assets.Scripts.Match
 
         public bool Pause { get; set; }
 
+        public List<long> PlayerIds {
+            get
+            {
+                return _playersIds;
+            }
+        }
+
+        public string MatchId { get; set; }
+
         public delegate void PlayerChange();
 
         public static event PlayerChange onCurrentPlayerChanged;
@@ -59,10 +71,13 @@ namespace Assets.Scripts.Match
         public void Awake()
         {
             _boardManager = FindObjectOfType<BoardManager>();
+            _matchStatusSaver = new MatchStatusSaver(_boardManager, this);
 
             _playersIds = new List<long>();
 
             Pause = true;
+
+            MatchId = Guid.NewGuid().ToString();
         }
 
         public void StartMatch()
@@ -106,6 +121,11 @@ namespace Assets.Scripts.Match
         public void SwitchCurrentPlayer()
         {
             CurrentPlayer = (CurrentPlayer + 1) % _playersIds.Count;
+        }
+
+        public void SaveStatus()
+        {
+            _matchStatusSaver.SaveStatus(MatchId);
         }
 
         private bool IsNumberOfPlayersCorrect(int numberOfPlayers)

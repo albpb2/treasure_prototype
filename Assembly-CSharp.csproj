@@ -72,11 +72,17 @@
     <Compile Include="Assets\Scripts\DB\DbManager.cs" />
     <Compile Include="Assets\Scripts\DB\Documents\MatchDocument.cs" />
     <Compile Include="Assets\Scripts\Extensions\IListExtensions.cs" />
+    <Compile Include="Assets\Scripts\Infrastructure\ArgumentValidator.cs" />
     <Compile Include="Assets\Scripts\Input\InputManager.cs" />
     <Compile Include="Assets\Scripts\Map\BoardGenerator.cs" />
     <Compile Include="Assets\Scripts\Map\BoardManager.cs" />
     <Compile Include="Assets\Scripts\Map\Tile.cs" />
     <Compile Include="Assets\Scripts\Match\MatchManager.cs" />
+    <Compile Include="Assets\Scripts\Match\Status\Entities\MatchStatus.cs" />
+    <Compile Include="Assets\Scripts\Match\Status\Entities\Player.cs" />
+    <Compile Include="Assets\Scripts\Match\Status\Entities\PlayerToken.cs" />
+    <Compile Include="Assets\Scripts\Match\Status\Entities\Tile.cs" />
+    <Compile Include="Assets\Scripts\Match\Status\MatchStatusSaver.cs" />
     <Compile Include="Assets\Scripts\Match\TurnManager.cs" />
     <Compile Include="Assets\Scripts\Players\PlayerInfoPanel.cs" />
     <Compile Include="Assets\Scripts\Players\PlayerToken.cs" />
@@ -294,23 +300,26 @@
     <Reference Include="UnityEngine.SpatialTracking">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.2.19f1/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
+    <Reference Include="AWSSDK.CognitoIdentity">
+      <HintPath>F:/Users/Alber/Documents/Unity/Treasure prototype/Assets/AWSSDK/AWSSDK.CognitoIdentity.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.Core">
+      <HintPath>F:/Users/Alber/Documents/Unity/Treasure prototype/Assets/AWSSDK/AWSSDK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.DynamoDBv2">
+      <HintPath>F:/Users/Alber/Documents/Unity/Treasure prototype/Assets/AWSSDK/AWSSDK.DynamoDBv2.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.SecurityToken">
+      <HintPath>F:/Users/Alber/Documents/Unity/Treasure prototype/Assets/AWSSDK/AWSSDK.SecurityToken.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Analytics">
       <HintPath>C:/Users/alber/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/UnityEngine.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>C:/Users/alber/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.13/UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
-    <Reference Include="AWSSDK.SecurityToken">
-      <HintPath>F:/Users/Alber/Documents/Unity/Treasure prototype/Assets/AWSSDK/AWSSDK.SecurityToken.dll</HintPath>
-    </Reference>
-    <Reference Include="AWSSDK.CognitoIdentity">
-      <HintPath>F:/Users/Alber/Documents/Unity/Treasure prototype/Assets/AWSSDK/AWSSDK.CognitoIdentity.dll</HintPath>
-    </Reference>
-    <Reference Include="AWSSDK.DynamoDBv2">
-      <HintPath>F:/Users/Alber/Documents/Unity/Treasure prototype/Assets/AWSSDK/AWSSDK.DynamoDBv2.dll</HintPath>
-    </Reference>
-    <Reference Include="AWSSDK.Core">
-      <HintPath>F:/Users/Alber/Documents/Unity/Treasure prototype/Assets/AWSSDK/AWSSDK.Core.dll</HintPath>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>F:/Users/Alber/Documents/Unity/Treasure prototype/Assets/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.2.19f1/Editor/Data/MonoBleedingEdge/lib/mono/unity/mscorlib.dll</HintPath>
