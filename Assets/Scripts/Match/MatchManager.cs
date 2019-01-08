@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Extensions;
 using Assets.Scripts.Map;
 using Assets.Scripts.Match.Status;
+using Assets.Scripts.Match.Status.Entities.Match;
 using Assets.Scripts.Players;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace Assets.Scripts.Match
 
         private BoardManager _boardManager;
         private MatchStatusSaver _matchStatusSaver;
+        private TileFactory _tileFactory;
         private int _currentPlayerIndex;
 
         public int CurrentPlayer
@@ -50,7 +52,7 @@ namespace Assets.Scripts.Match
 
         public long CurrentPlayerId { get; set; }
 
-        public PlayerToken CurrentPlayerToken { get; set; }
+        public Players.PlayerToken CurrentPlayerToken { get; set; }
 
         public bool Pause { get; set; }
 
@@ -66,6 +68,7 @@ namespace Assets.Scripts.Match
         {
             _boardManager = FindObjectOfType<BoardManager>();
             _matchStatusSaver = new MatchStatusSaver(_boardManager, this);
+            _tileFactory = new TileFactory();
 
             PlayerIds = new List<long>();
 
@@ -97,6 +100,21 @@ namespace Assets.Scripts.Match
             for (var i = 0; i < numberOfPlayers; i++)
             {
                 CreatePlayer(i);
+            }
+        }
+
+        public void SetStatus(MatchStatus matchStatus)
+        {
+            PlayerIds = matchStatus.Players.Select(player => player.Id).ToList();
+            CurrentPlayer = PlayerIds.IndexOf(matchStatus.CurrentPlayer);
+            var tiles = FindObjectsOfType<Map.Tile>();
+            foreach(var tile in tiles)
+            {
+                Destroy(tile);
+            }
+            foreach(var statusTile in matchStatus.Tiles)
+            {
+                _tileFactory.CreateTile(statusTile.TileType, statusTile.Position.x, statusTile.Position.y, statusTile.Id);
             }
         }
 

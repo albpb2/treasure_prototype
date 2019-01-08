@@ -31,12 +31,8 @@ namespace Assets.Scripts.Match.Status
                         return;
                     }
 
-                    SetStatus(result.Result);
+                    _matchManager.SetStatus(JsonUtility.FromJson<MatchStatus>(result.Result.StateJson));
                 });
-        }
-
-        private void SetStatus(MatchDocument matchStatus)
-        {
         }
     }
 }

@@ -76,6 +76,8 @@
     <Compile Include="Assets\Scripts\Map\BoardGenerator.cs" />
     <Compile Include="Assets\Scripts\Map\BoardManager.cs" />
     <Compile Include="Assets\Scripts\Map\Tile.cs" />
+    <Compile Include="Assets\Scripts\Map\TileFactory.cs" />
+    <Compile Include="Assets\Scripts\Map\TileType.cs" />
     <Compile Include="Assets\Scripts\Match\MatchManager.cs" />
     <Compile Include="Assets\Scripts\Match\Status\Entities\MatchStatus.cs" />
     <Compile Include="Assets\Scripts\Match\Status\Entities\Player.cs" />

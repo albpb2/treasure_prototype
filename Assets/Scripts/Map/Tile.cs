@@ -34,6 +34,8 @@ namespace Assets.Scripts.Map
             }
         }
 
+        public TileType Type { get; set; }
+
         public void Awake()
         {
             IsUncovered = false;
