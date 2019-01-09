@@ -12,15 +12,7 @@ namespace Assets.Scripts.Players
         private Shader _originalShader;
         private Shader _selectedShader;
 
-        public bool Selected { get; private set; }
-
-        public long PlayerId { get; set; }
-
-        public Tile Tile { get; set; }
-
-        public Color Color { get; set; }
-
-        private readonly List<Color> _colors = new List<Color>
+        private static readonly List<Color> _colors = new List<Color>
         {
             Color.red,
             Color.blue,
@@ -30,22 +22,60 @@ namespace Assets.Scripts.Players
             Color.yellow
         };
 
-        public static PlayerToken CreatePlayerToken(long playerId)
+        public bool Selected { get; private set; }
+
+        public long PlayerId { get; set; }
+
+        public Tile Tile { get; set; }
+
+        public Color Color { get; set; }
+
+        public static PlayerToken CreatePlayerToken(long playerId, Tile tile)
+        {
+            var color = GetRandomColor();
+            
+            return CreatePlayerToken(playerId, color, tile);
+        }
+
+        public static PlayerToken CreatePlayerToken(long playerId, Color color, Tile tile)
         {
             var baseObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
             baseObject.AddComponent<Collider>();
 
             var playerToken = baseObject.AddComponent<PlayerToken>();
-            
+
             const float TokenScale = 0.5f;
             playerToken.transform.localScale *= TokenScale;
 
-            playerToken.SetRandomColor();
-
             playerToken.PlayerId = playerId;
+
+            playerToken.SetColor(color);
+
+            playerToken.PlaceAt(tile);
 
             return playerToken;
         }
+
+        public void Awake()
+        {
+            _originalShader = GetComponent<Renderer>().material.shader;
+            _selectedShader = Shader.Find("Hidden/SceneViewSelected");
+
+            PlayerId = 0; // to-do: change to real id
+
+            TurnManager.onTurnReset += ResetSelected;
+        }
+
+        public void OnMouseDown()
+        {
+            var matchManager = FindObjectOfType<MatchManager>();
+
+            if (matchManager.CurrentPlayerId == PlayerId)
+            {
+                ChangeSelection();
+            }
+        }
+
 
         public void MoveTo(Tile tile)
         {
@@ -78,48 +108,7 @@ namespace Assets.Scripts.Players
             UpdateShader();
         }
 
-        private void SetRandomColor()
-        {
-            var materialColored = new Material(Shader.Find("Diffuse"));
-            Color = GetRandomColor();
-            materialColored.color = Color;
-            GetComponent<Renderer>().material = materialColored;
-        }
-
-        public void Awake()
-        {
-            _originalShader = GetComponent<Renderer>().material.shader;
-            _selectedShader = Shader.Find("Hidden/SceneViewSelected");
-
-            PlayerId = 0; // to-do: change to real id
-
-            TurnManager.onTurnReset += ResetSelected;
-        }
-
-        private void OnMouseDown()
-        {
-            var matchManager = FindObjectOfType<MatchManager>();
-
-            if (matchManager.CurrentPlayerId == PlayerId)
-            {
-                ChangeSelection();
-            }
-        }
-
-        private void UpdateShader()
-        {
-            var renderer = GetComponent<Renderer>();
-            if (!Selected)
-            {
-                renderer.material.shader = _originalShader;
-            }
-            else
-            {
-                renderer.material.shader = _selectedShader;
-            }
-        }
-
-        private Color GetRandomColor()
+        private static Color GetRandomColor()
         {
             var usedColors = GetUsedColors().ToList();
 
@@ -133,11 +122,38 @@ namespace Assets.Scripts.Players
             return color;
         }
 
-        private IEnumerable<Color> GetUsedColors()
+        private static IEnumerable<Color> GetUsedColors()
         {
             var tokens = FindObjectsOfType<PlayerToken>();
 
             return tokens.Select(token => token.Color);
+        }
+
+        private void SetRandomColor()
+        {
+            var color = GetRandomColor();
+            SetColor(color);
+        }
+
+        private void SetColor(Color color)
+        {
+            Color = color;
+            var materialColored = new Material(Shader.Find("Diffuse"));
+            materialColored.color = Color;
+            GetComponent<Renderer>().material = materialColored;
+        }
+
+        private void UpdateShader()
+        {
+            var renderer = GetComponent<Renderer>();
+            if (!Selected)
+            {
+                renderer.material.shader = _originalShader;
+            }
+            else
+            {
+                renderer.material.shader = _selectedShader;
+            }
         }
 
         private void ResetSelected()

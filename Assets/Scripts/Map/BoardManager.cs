@@ -8,8 +8,8 @@ namespace Assets.Scripts.Map
 {
     public class BoardManager : MonoBehaviour
     {
-        public List<Tile> Tiles { get; private set; }
-        public List<PlayerToken> PlayerTokens { get; private set; }
+        public List<Tile> Tiles { get; set; }
+        public List<PlayerToken> PlayerTokens { get; set; }
 
         private void Awake()
         {
@@ -48,10 +48,8 @@ namespace Assets.Scripts.Map
 
         public void CreatePlayerToken(long playerId)
         {
-            var playerToken = PlayerToken.CreatePlayerToken(playerId);
+            var playerToken = PlayerToken.CreatePlayerToken(playerId, GetRandomEmptyTile());
             PlayerTokens.Add(playerToken);
-
-            playerToken.PlaceAt(GetRandomEmptyTile());
         }
 
         private Tile GetRandomEmptyTile()

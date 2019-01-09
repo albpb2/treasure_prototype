@@ -2,11 +2,6 @@
 using Assets.Scripts.DB;
 using Assets.Scripts.DB.Documents;
 using Assets.Scripts.Match.Status.Entities.Match;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.Match.Status

@@ -45,7 +45,7 @@ namespace Assets.Scripts.Map
             var tileType = (TileType)tileTypeIndex;
         }
 
-        public void CreateTile(TileType tileType, float x, float y, int id)
+        public Tile CreateTile(TileType tileType, float x, float y, int id)
         {
             var tileObject = GameObject.Instantiate(
                 Resources.Load(GetTilePath(tileType), typeof(GameObject)),
@@ -57,6 +57,8 @@ namespace Assets.Scripts.Map
             tileObject.AddComponent<MeshCollider>();
             tile.Id = id;
             tile.Type = tileType;
+
+            return tile;
         }
     }
 }

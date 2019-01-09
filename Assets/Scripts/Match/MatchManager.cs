@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using PlayerToken = Assets.Scripts.Players.PlayerToken;
 
 namespace Assets.Scripts.Match
 {
@@ -107,15 +108,10 @@ namespace Assets.Scripts.Match
         {
             PlayerIds = matchStatus.Players.Select(player => player.Id).ToList();
             CurrentPlayer = PlayerIds.IndexOf(matchStatus.CurrentPlayer);
-            var tiles = FindObjectsOfType<Map.Tile>();
-            foreach(var tile in tiles)
-            {
-                Destroy(tile);
-            }
-            foreach(var statusTile in matchStatus.Tiles)
-            {
-                _tileFactory.CreateTile(statusTile.TileType, statusTile.Position.x, statusTile.Position.y, statusTile.Id);
-            }
+            
+            _boardManager.Tiles = RecreateTilesFromMatchStatus(matchStatus);
+            
+            _boardManager.PlayerTokens = RecreatePlayerTokensFromMatchStatus(matchStatus);
         }
 
         private int GetNumberOfPlayers()
@@ -159,6 +155,47 @@ namespace Assets.Scripts.Match
         private void DisableNumberOfPlayersPanel()
         {
             _numberOfPlayersPanel.SetActive(false);
+        }
+
+        private List<Map.Tile> RecreateTilesFromMatchStatus(MatchStatus matchStatus)
+        {
+            var oldTiles = FindObjectsOfType<Map.Tile>();
+            foreach (var tile in oldTiles)
+            {
+                Destroy(tile);
+            }
+
+            var tiles = new List<Map.Tile>();
+            foreach (var statusTile in matchStatus.Tiles)
+            {
+                var tile = _tileFactory.CreateTile(statusTile.TileType, statusTile.Position.x, statusTile.Position.y, statusTile.Id);
+                if (statusTile.Uncovered)
+                {
+                    tile.Uncover();
+                }
+                tiles.Add(tile);
+            }
+
+            return tiles;
+        }
+
+        private List<PlayerToken> RecreatePlayerTokensFromMatchStatus(MatchStatus matchStatus)
+        {
+            var oldPlayerTokens = FindObjectsOfType<PlayerToken>();
+            foreach (var playerToken in oldPlayerTokens)
+            {
+                Destroy(playerToken);
+            }
+
+            var playerTokens = new List<PlayerToken>();
+            foreach (var statusPlayerToken in matchStatus.PlayerTokens)
+            {
+                var playerToken = PlayerToken.CreatePlayerToken(statusPlayerToken.PlayerId, statusPlayerToken.Color,
+                    _boardManager.FindTile(statusPlayerToken.TileId));
+                playerTokens.Add(playerToken);
+            }
+
+            return playerTokens;
         }
     }
 }
