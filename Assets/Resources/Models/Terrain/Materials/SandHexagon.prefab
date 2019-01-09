@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33502916458343634}
   - component: {fileID: 23482455281047704}
   - component: {fileID: 95141217202124786}
+  - component: {fileID: 114873685444357430}
   m_Layer: 0
   m_Name: SandHexagon
   m_TagString: Untagged
@@ -102,3 +103,16 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114873685444357430
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1063723065523992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d00c4cad9e0fd244f97344becfe91bd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseMaterial: {fileID: 2100000, guid: 0f38e74842f167c428b98f8e5e303410, type: 2}
+  _cavedMaterial: {fileID: 2100000, guid: 933907fc3dfc9b24d8abfb729698bdf2, type: 2}

@@ -11,5 +11,6 @@ namespace Assets.Scripts.Match.Status.Entities.Match
         public Vector3 Position;
         public bool Uncovered;
         public TileType TileType;
+        public bool Caved;
     }
 }

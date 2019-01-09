@@ -1,14 +1,13 @@
-﻿using Assets.Scripts.DB;
-using Assets.Scripts.DB.Documents;
-using Assets.Scripts.Map;
-using Assets.Scripts.Match.Status;
-using System;
+﻿using Assets.Scripts.Map;
 using UnityEngine;
 
 namespace Assets.Scripts.Match
 {
     public class TurnManager : MonoBehaviour
     {
+        [SerializeField]
+        private TurnActionsPanel _turnActionsPanel;
+
         private BoardManager _boardManager;
         private MatchManager _matchManager;
 
@@ -21,6 +20,8 @@ namespace Assets.Scripts.Match
         {
             _boardManager = FindObjectOfType<BoardManager>();
             _matchManager = FindObjectOfType<MatchManager>();
+
+            Tile.onTileClicked += ShowActionsPanel;
         }
 
         public void EndTurn()
@@ -37,6 +38,12 @@ namespace Assets.Scripts.Match
         public void PlayTurn()
         {
             HasTurnBeenPlayed = true;
+        }
+
+        private void ShowActionsPanel(Tile tile)
+        {
+            _matchManager.Pause = true;
+            _turnActionsPanel.gameObject.SetActive(true);
         }
     }
 }

@@ -75,6 +75,7 @@
     <Compile Include="Assets\Scripts\Input\InputManager.cs" />
     <Compile Include="Assets\Scripts\Map\BoardGenerator.cs" />
     <Compile Include="Assets\Scripts\Map\BoardManager.cs" />
+    <Compile Include="Assets\Scripts\Map\Hexagon.cs" />
     <Compile Include="Assets\Scripts\Map\Tile.cs" />
     <Compile Include="Assets\Scripts\Map\TileFactory.cs" />
     <Compile Include="Assets\Scripts\Map\TileType.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Assets\Scripts\Match\Status\Entities\Tile.cs" />
     <Compile Include="Assets\Scripts\Match\Status\MatchStatusLoader.cs" />
     <Compile Include="Assets\Scripts\Match\Status\MatchStatusSaver.cs" />
+    <Compile Include="Assets\Scripts\Match\TurnActionsPanel.cs" />
     <Compile Include="Assets\Scripts\Match\TurnManager.cs" />
     <Compile Include="Assets\Scripts\Players\Player.cs" />
     <Compile Include="Assets\Scripts\Players\PlayerInfoPanel.cs" />

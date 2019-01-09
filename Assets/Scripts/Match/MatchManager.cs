@@ -181,6 +181,11 @@ namespace Assets.Scripts.Match
                 {
                     tile.Uncover();
                 }
+                if (statusTile.Caved)
+                {
+                    tile.Cave();
+                }
+
                 tiles.Add(tile);
             }
 

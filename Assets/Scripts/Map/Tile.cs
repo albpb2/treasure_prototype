@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.CommandHandlers;
+﻿using System;
+using Assets.Scripts.CommandHandlers;
 using Assets.Scripts.Commands;
 using Assets.Scripts.Match;
 using Assets.Scripts.Players;
@@ -17,6 +18,10 @@ namespace Assets.Scripts.Map
         private Shader _selectedShader;
         private Renderer _renderer;
         private MatchManager _matchManager;
+        private Hexagon _hexagon;
+
+        public delegate void TilePressed(Tile tile);
+        public static event TilePressed onTileClicked;
 
         public bool IsUncovered { get; private set; }
 
@@ -36,6 +41,8 @@ namespace Assets.Scripts.Map
 
         public TileType Type { get; set; }
 
+        public bool IsCaved { get; private set; }
+
         public void Awake()
         {
             IsUncovered = false;
@@ -43,6 +50,7 @@ namespace Assets.Scripts.Map
             _selectedShader = Shader.Find("Outlined/Silhouetted Diffuse");
             _renderer = GetComponent<Renderer>();
             _matchManager = FindObjectOfType<MatchManager>();
+            _hexagon = FindObjectOfType<Hexagon>();
         }
 
         public void Uncover()
@@ -53,6 +61,17 @@ namespace Assets.Scripts.Map
 
                 IsUncovered = true;
             }
+        }
+
+        public void Cave()
+        {
+            if (!IsUncovered)
+            {
+                throw new InvalidOperationException();
+            }
+
+            IsCaved = true;
+            _renderer.material = _hexagon.CavedMaterial;
         }
         
         private void OnMouseOver()
@@ -73,8 +92,14 @@ namespace Assets.Scripts.Map
 
         private void OnMouseDown()
         {
-            if (PlayerToken != null || _matchManager.Pause)
+            if (_matchManager.Pause)
             {
+                return;
+            }
+
+            if (PlayerToken != null && _matchManager.CurrentPlayerId == PlayerToken.PlayerId)
+            {
+                onTileClicked(this);
                 return;
             }
 
@@ -82,16 +107,13 @@ namespace Assets.Scripts.Map
 
             var playerToken = boardManager.FindPlayerToken(_matchManager.CurrentPlayerId);
 
-            if (playerToken.Selected && IsAdjacentTo(playerToken.Tile))
-            {
-                var commandBus = FindObjectOfType<CommandBus>();
+            var commandBus = FindObjectOfType<CommandBus>();
 
-                commandBus.ExecuteInThisTurn(new MovePlayerCommand
-                {
-                    PlayerId = playerToken.PlayerId,
-                    TileId = Id
-                });
-            }
+            commandBus.ExecuteInThisTurn(new MovePlayerCommand
+            {
+                PlayerId = playerToken.PlayerId,
+                TileId = Id
+            });
         }
 
         private bool IsAdjacentTo(Tile tile)
