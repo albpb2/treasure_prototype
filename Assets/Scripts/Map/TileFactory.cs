@@ -9,8 +9,8 @@ namespace Assets.Scripts.Map
 
         private Dictionary<TileType, string> _tilePrefabs = new Dictionary<TileType, string>
         {
-            [TileType.Grass] = "GrassHexagon.prefab",
-            [TileType.Sand] = "SandHexagon.prefab",
+            [TileType.Grass] = "GrassHexagon",
+            [TileType.Sand] = "SandHexagon",
         };
 
         private System.Random _random = new System.Random();
@@ -43,6 +43,8 @@ namespace Assets.Scripts.Map
         {
             var tileTypeIndex = _random.Next(0, _tilePrefabs.Count);
             var tileType = (TileType)tileTypeIndex;
+
+            CreateTile(tileType, x, y, id);
         }
 
         public Tile CreateTile(TileType tileType, float x, float y, int id)
