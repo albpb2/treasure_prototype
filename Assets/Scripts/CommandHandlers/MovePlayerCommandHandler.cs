@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Commands;
-using Assets.Scripts.Map;
 
 namespace Assets.Scripts.CommandHandlers
 {
@@ -7,10 +6,22 @@ namespace Assets.Scripts.CommandHandlers
     {
         public void Execute(MovePlayerCommand command)
         {
-            var playerToken = BoardManager.FindPlayerToken(command.PlayerId);
-            var tile = BoardManager.FindTile(command.TileId);
+            MovePlayerToken(command.PlayerId, command.TileId);
+            CreditGoldToPlayer();
+        }
 
+        private void MovePlayerToken(long playerId, int tileId)
+        {
+            var playerToken = BoardManager.FindPlayerToken(playerId);
+            var tile = BoardManager.FindTile(tileId);
             playerToken.MoveTo(tile);
+        }
+
+        private void CreditGoldToPlayer()
+        {
+            var player = MatchManager.CurrentPlayer;
+            player.Gold += MatchManager.GoldPerMovement;
+            PlayerInfoPanel.SetPlayerInfo(MatchManager.CurrentPlayer, MatchManager.CurrentPlayerToken);
         }
     }
 }

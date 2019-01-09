@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using Player = Assets.Scripts.Players.Player;
 using PlayerToken = Assets.Scripts.Players.PlayerToken;
 
 namespace Assets.Scripts.Match
@@ -23,13 +24,15 @@ namespace Assets.Scripts.Match
         private GameObject _numberOfPlayersPanel;
         [SerializeField]
         private Text _numberOfPlayersText;
+        [SerializeField]
+        private int _goldPerMovement;
 
         private BoardManager _boardManager;
         private MatchStatusSaver _matchStatusSaver;
         private TileFactory _tileFactory;
         private int _currentPlayerIndex;
 
-        public int CurrentPlayer
+        public int CurrentPlayerIndex
         {
             get
             {
@@ -38,18 +41,17 @@ namespace Assets.Scripts.Match
             set
             {
                 _currentPlayerIndex = value;
-                CurrentPlayerId = PlayerIds[_currentPlayerIndex];
+                CurrentPlayerId = Players[_currentPlayerIndex].Id;
 
                 CurrentPlayerToken = _boardManager.FindPlayerToken(CurrentPlayerId);
 
-                _playerInfoPanel.SetPlayerInfo(CurrentPlayerToken);
+                _playerInfoPanel.SetPlayerInfo(CurrentPlayer, CurrentPlayerToken);
 
-                if (onCurrentPlayerChanged != null)
-                {
-                    onCurrentPlayerChanged();
-                }
+                onCurrentPlayerChanged?.Invoke();
             }
         }
+
+        public Player CurrentPlayer => Players[CurrentPlayerIndex];
 
         public long CurrentPlayerId { get; set; }
 
@@ -57,9 +59,13 @@ namespace Assets.Scripts.Match
 
         public bool Pause { get; set; }
 
-        public List<long> PlayerIds { get; set; }
+        public List<Player> Players { get; set; } = new List<Player>();
 
         public string MatchId { get; set; }
+
+        public int GoldPerMovement => _goldPerMovement;
+
+        public PlayerInfoPanel PlayerInfoPanel => _playerInfoPanel;
 
         public delegate void PlayerChange();
 
@@ -70,8 +76,6 @@ namespace Assets.Scripts.Match
             _boardManager = FindObjectOfType<BoardManager>();
             _matchStatusSaver = new MatchStatusSaver(_boardManager, this);
             _tileFactory = new TileFactory();
-
-            PlayerIds = new List<long>();
 
             Pause = true;
 
@@ -90,7 +94,7 @@ namespace Assets.Scripts.Match
 
                 EnablePlayerInfoPanel();
 
-                CurrentPlayer = Enumerable.Range(0, numberOfPlayers).ToList().GetRandomElement();
+                CurrentPlayerIndex = Enumerable.Range(0, numberOfPlayers).ToList().GetRandomElement();
 
                 Pause = false;
             }
@@ -106,8 +110,11 @@ namespace Assets.Scripts.Match
 
         public void SetStatus(MatchStatus matchStatus)
         {
-            PlayerIds = matchStatus.Players.Select(player => player.Id).ToList();
-            CurrentPlayer = PlayerIds.IndexOf(matchStatus.CurrentPlayer);
+            Players = matchStatus.Players.Select(statusPlayer => new Player(statusPlayer.Id)
+            {
+                Gold = statusPlayer.Gold
+            }).ToList();
+            CurrentPlayerIndex = Players.IndexOf(Players.Single(player => player.Id == matchStatus.CurrentPlayer));
             
             _boardManager.Tiles = RecreateTilesFromMatchStatus(matchStatus);
             
@@ -128,7 +135,7 @@ namespace Assets.Scripts.Match
 
         public void SwitchCurrentPlayer()
         {
-            CurrentPlayer = (CurrentPlayer + 1) % PlayerIds.Count;
+            CurrentPlayerIndex = (CurrentPlayerIndex + 1) % Players.Count;
         }
 
         public void SaveStatus()
@@ -143,7 +150,8 @@ namespace Assets.Scripts.Match
 
         private void CreatePlayer(int playerId)
         {
-            PlayerIds.Add(playerId);
+            var player = new Player(playerId);
+            Players.Add(player);
             _boardManager.CreatePlayerToken(playerId);
         }
 

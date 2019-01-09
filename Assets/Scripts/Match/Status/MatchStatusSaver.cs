@@ -1,11 +1,10 @@
-﻿using Assets.Scripts.DB;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Assets.Scripts.DB;
 using Assets.Scripts.DB.Documents;
 using Assets.Scripts.Infrastructure;
 using Assets.Scripts.Map;
 using Assets.Scripts.Match.Status.Entities.Match;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.Match.Status
@@ -46,9 +45,18 @@ namespace Assets.Scripts.Match.Status
             {
                 Tiles = GetTiles().ToList(),
                 PlayerTokens = GetPlayerTokens().ToList(),
-                Players = _matchManager.PlayerIds.Select(playerId => new Player { Id = playerId }).ToList(),
-                CurrentPlayer = _matchManager.CurrentPlayer
+                Players = GetPlayers().ToList(),
+                CurrentPlayer = _matchManager.CurrentPlayerIndex
             };
+        }
+
+        private IEnumerable<Entities.Match.Player> GetPlayers()
+        {
+            return _matchManager.Players.Select(player => new Player
+            {
+                Id = player.Id,
+                Gold = player.Gold
+            });
         }
 
         private IEnumerable<Entities.Match.Tile> GetTiles()

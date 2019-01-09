@@ -31,7 +31,14 @@ namespace Assets.Scripts.CommandHandlers
 
         public void Start()
         {
-            _commandHandlers.Add(typeof(MovePlayerCommand), new MovePlayerCommandHandler { BoardManager = _boardManager });
+            _commandHandlers.Add(typeof(MovePlayerCommand), new MovePlayerCommandHandler());
+
+            foreach (var commandHandlerBase in _commandHandlers.Values)
+            {
+                commandHandlerBase.BoardManager = _boardManager;
+                commandHandlerBase.MatchManager = _matchManager;
+                commandHandlerBase.PlayerInfoPanel = _matchManager.PlayerInfoPanel;
+            }
         }
 
         public void ExecuteInThisTurn<TCommand>(TCommand command) where TCommand : BaseCommand
