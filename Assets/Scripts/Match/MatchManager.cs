@@ -26,6 +26,8 @@ namespace Assets.Scripts.Match
         private Text _numberOfPlayersText;
         [SerializeField]
         private int _goldPerMovement;
+        [SerializeField]
+        private int _goldPerDig = 20;
 
         private BoardManager _boardManager;
         private MatchStatusSaver _matchStatusSaver;
@@ -64,6 +66,8 @@ namespace Assets.Scripts.Match
         public string MatchId { get; set; }
 
         public int GoldPerMovement => _goldPerMovement;
+
+        public int GoldPerDig => _goldPerDig;
 
         public PlayerInfoPanel PlayerInfoPanel => _playerInfoPanel;
 
@@ -181,9 +185,9 @@ namespace Assets.Scripts.Match
                 {
                     tile.Uncover();
                 }
-                if (statusTile.Caved)
+                if (statusTile.Digged)
                 {
-                    tile.Cave();
+                    tile.Dig();
                 }
 
                 tiles.Add(tile);

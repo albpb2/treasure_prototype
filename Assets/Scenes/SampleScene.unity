@@ -781,7 +781,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 449346641}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1808730435}
+        m_MethodName: Dig
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &449346641
@@ -1740,6 +1751,7 @@ MonoBehaviour:
   _numberOfPlayersPanel: {fileID: 2139378920}
   _numberOfPlayersText: {fileID: 1962998645}
   _goldPerMovement: 5
+  _goldPerDig: 20
 --- !u!4 &2029805577
 Transform:
   m_ObjectHideFlags: 0

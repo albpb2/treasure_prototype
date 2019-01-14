@@ -40,10 +40,16 @@ namespace Assets.Scripts.Match
             HasTurnBeenPlayed = true;
         }
 
-        private void ShowActionsPanel(Tile tile)
+        public void ShowActionsPanel(Tile tile)
         {
             _matchManager.Pause = true;
-            _turnActionsPanel.gameObject.SetActive(true);
+            _turnActionsPanel.Enable(tile);
+        }
+
+        public void HideActionsPanel()
+        {
+            _matchManager.Pause = false;
+            _turnActionsPanel.Disable();
         }
     }
 }

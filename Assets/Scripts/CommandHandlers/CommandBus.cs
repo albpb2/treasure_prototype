@@ -32,6 +32,7 @@ namespace Assets.Scripts.CommandHandlers
         public void Start()
         {
             _commandHandlers.Add(typeof(MovePlayerCommand), new MovePlayerCommandHandler());
+            _commandHandlers.Add(typeof(DigCommand), new DigCommandHandler());
 
             foreach (var commandHandlerBase in _commandHandlers.Values)
             {

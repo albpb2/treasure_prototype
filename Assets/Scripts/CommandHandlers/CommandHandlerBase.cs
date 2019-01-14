@@ -11,5 +11,12 @@ namespace Assets.Scripts.CommandHandlers
         public MatchManager MatchManager{ get; set; }
 
         public PlayerInfoPanel PlayerInfoPanel { get; set; }
+
+        protected void CreditGoldToPlayer(int gold)
+        {
+            var player = MatchManager.CurrentPlayer;
+            player.Gold += gold;
+            PlayerInfoPanel.SetPlayerInfo(MatchManager.CurrentPlayer, MatchManager.CurrentPlayerToken);
+        }
     }
 }

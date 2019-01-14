@@ -64,9 +64,11 @@
     <Compile Include="Assets\Scripts\Camera\PlayerBoardCamera.cs" />
     <Compile Include="Assets\Scripts\CommandHandlers\CommandBus.cs" />
     <Compile Include="Assets\Scripts\CommandHandlers\CommandHandlerBase.cs" />
+    <Compile Include="Assets\Scripts\CommandHandlers\DigCommandHandler.cs" />
     <Compile Include="Assets\Scripts\CommandHandlers\ICommandHandler.cs" />
     <Compile Include="Assets\Scripts\CommandHandlers\MovePlayerCommandHandler.cs" />
     <Compile Include="Assets\Scripts\Commands\BaseCommand.cs" />
+    <Compile Include="Assets\Scripts\Commands\DigCommand.cs" />
     <Compile Include="Assets\Scripts\Commands\MovePlayerCommand.cs" />
     <Compile Include="Assets\Scripts\DB\DbManager.cs" />
     <Compile Include="Assets\Scripts\DB\Documents\MatchDocument.cs" />

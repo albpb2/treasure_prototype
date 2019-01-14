@@ -67,7 +67,7 @@ namespace Assets.Scripts.Match.Status
                 Position = tile.transform.position,
                 Uncovered = tile.IsUncovered,
                 TileType = tile.Type,
-                Caved = tile.IsCaved
+                Digged = tile.IsDigged
             });
         }
 

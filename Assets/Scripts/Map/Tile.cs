@@ -41,7 +41,7 @@ namespace Assets.Scripts.Map
 
         public TileType Type { get; set; }
 
-        public bool IsCaved { get; private set; }
+        public bool IsDigged { get; private set; }
 
         public void Awake()
         {
@@ -63,14 +63,14 @@ namespace Assets.Scripts.Map
             }
         }
 
-        public void Cave()
+        public void Dig()
         {
             if (!IsUncovered)
             {
                 throw new InvalidOperationException();
             }
 
-            IsCaved = true;
+            IsDigged = true;
             _renderer.material = _hexagon.CavedMaterial;
         }
         
