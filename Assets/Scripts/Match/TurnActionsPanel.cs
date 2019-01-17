@@ -2,14 +2,17 @@
 using Assets.Scripts.Commands;
 using Assets.Scripts.Map;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.Match
 {
-    public class TurnActionsPanel : MonoBehaviour
+    public class TurnActionsPanel : MonoBehaviour, IDeselectHandler
     {
         private MatchManager _matchManager;
         private CommandBus _commandBus;
         private TurnManager _turnManager;
+
+        public Tile Tile { get; set; }
 
         public void Awake()
         {
@@ -18,7 +21,10 @@ namespace Assets.Scripts.Match
             _turnManager = FindObjectOfType<TurnManager>();
         }
 
-        public Tile Tile { get; set; }
+        public void OnDeselect(BaseEventData data)
+        {
+            Debug.Log("Deselected");
+        }
 
         public void Enable(Tile tile)
         {

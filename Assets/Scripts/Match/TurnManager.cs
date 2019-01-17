@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Map;
 using UnityEngine;
+using UnityEngine.Experimental.UIElements;
 
 namespace Assets.Scripts.Match
 {
@@ -7,6 +8,8 @@ namespace Assets.Scripts.Match
     {
         [SerializeField]
         private TurnActionsPanel _turnActionsPanel;
+        [SerializeField]
+        private UnityEngine.UI.Button _closeButton;
 
         private BoardManager _boardManager;
         private MatchManager _matchManager;
@@ -44,12 +47,14 @@ namespace Assets.Scripts.Match
         {
             _matchManager.Pause = true;
             _turnActionsPanel.Enable(tile);
+            _closeButton.gameObject.SetActive(true);
         }
 
         public void HideActionsPanel()
         {
             _matchManager.Pause = false;
             _turnActionsPanel.Disable();
+            _closeButton.gameObject.SetActive(false);
         }
     }
 }
