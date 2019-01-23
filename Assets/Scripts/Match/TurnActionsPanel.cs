@@ -4,6 +4,7 @@ using Assets.Scripts.Commands;
 using Assets.Scripts.Map;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Match
 {
@@ -22,6 +23,7 @@ namespace Assets.Scripts.Match
         public void OnEnable()
         {
             StartCoroutine(SetReadyAfterDelay());
+            EnableOrDisableButtons();
         }
 
         public void Awake()
@@ -84,6 +86,16 @@ namespace Assets.Scripts.Match
         {
             Vector2 size = Vector2.Scale(transform.rect.size, transform.lossyScale);
             return new Rect((Vector2)transform.position - (size * 0.5f), size);
+        }
+
+        private void EnableOrDisableButtons()
+        {
+            var interactable = !_turnManager.HasTurnBeenPlayed;
+
+            foreach (var button in GameObject.FindGameObjectsWithTag("TurnActionButton"))
+            {
+                button.GetComponent<Button>().interactable = interactable;
+            }
         }
     }
 }
