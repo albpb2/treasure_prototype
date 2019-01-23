@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Map;
 using UnityEngine;
-using UnityEngine.Experimental.UIElements;
 
 namespace Assets.Scripts.Match
 {
@@ -8,10 +7,7 @@ namespace Assets.Scripts.Match
     {
         [SerializeField]
         private TurnActionsPanel _turnActionsPanel;
-        [SerializeField]
-        private UnityEngine.UI.Button _closeButton;
 
-        private BoardManager _boardManager;
         private MatchManager _matchManager;
 
         public bool HasTurnBeenPlayed { get; private set; }
@@ -21,7 +17,6 @@ namespace Assets.Scripts.Match
 
         public void Awake()
         {
-            _boardManager = FindObjectOfType<BoardManager>();
             _matchManager = FindObjectOfType<MatchManager>();
 
             Tile.onTileClicked += ShowActionsPanel;
@@ -47,14 +42,12 @@ namespace Assets.Scripts.Match
         {
             _matchManager.Pause = true;
             _turnActionsPanel.Enable(tile);
-            _closeButton.gameObject.SetActive(true);
         }
 
         public void HideActionsPanel()
         {
             _matchManager.Pause = false;
             _turnActionsPanel.Disable();
-            _closeButton.gameObject.SetActive(false);
         }
     }
 }
