@@ -6,6 +6,7 @@ using Assets.Scripts.Players;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Map.Locations;
 using UnityEngine;
 using UnityEngine.UI;
 using Player = Assets.Scripts.Players.Player;
@@ -28,6 +29,10 @@ namespace Assets.Scripts.Match
         private int _goldPerMovement;
         [SerializeField]
         private int _goldPerDig = 20;
+        [SerializeField]
+        private int _farmCost = 40;
+        [SerializeField]
+        private int _farmMoneyPerTurn = 10;
 
         private BoardManager _boardManager;
         private MatchStatusSaver _matchStatusSaver;
@@ -69,6 +74,10 @@ namespace Assets.Scripts.Match
         public int GoldPerMovement => _goldPerMovement;
 
         public int GoldPerDig => _goldPerDig;
+
+        public int FarmCost => _farmCost;
+
+        public int FarmMoneyPerTurn => _farmMoneyPerTurn;
 
         public PlayerInfoPanel PlayerInfoPanel => _playerInfoPanel;
 
@@ -126,6 +135,8 @@ namespace Assets.Scripts.Match
             
             _boardManager.PlayerTokens = RecreatePlayerTokensFromMatchStatus(matchStatus);
 
+            RecreateFarmsFromMatchStatus(matchStatus);
+
             if (matchStatus.TurnPlayed)
             {
                 _turnManager.PlayTurn();
@@ -152,6 +163,11 @@ namespace Assets.Scripts.Match
         public void SaveStatus()
         {
             _matchStatusSaver.SaveStatus(MatchId);
+        }
+
+        public Player FindPlayer(long playerId)
+        {
+            return Players.SingleOrDefault(p => p.Id == playerId);
         }
 
         private bool IsNumberOfPlayersCorrect(int numberOfPlayers)
@@ -220,6 +236,22 @@ namespace Assets.Scripts.Match
             }
 
             return playerTokens;
+        }
+
+        public void RecreateFarmsFromMatchStatus(MatchStatus matchStatus)
+        {
+            var oldFarms = FindObjectsOfType<Farm>();
+            foreach (var oldFarm in oldFarms)
+            {
+                Destroy(oldFarm);
+            }
+
+            foreach (var matchStatusFarm in matchStatus.Farms)
+            {
+                var tile = _boardManager.FindTile(matchStatusFarm.TileId);
+                var playerToken = _boardManager.FindPlayerToken(matchStatusFarm.PlayerId);
+                Farm.Instantiate(tile, playerToken);
+            }
         }
     }
 }

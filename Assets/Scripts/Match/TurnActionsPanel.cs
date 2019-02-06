@@ -64,6 +64,16 @@ namespace Assets.Scripts.Match
             _turnManager.HideActionsPanel();
         }
 
+        public void CreateFarm()
+        {
+            _commandBus.ExecuteInThisTurn(new CreateFarmCommand()
+            {
+                PlayerId = _matchManager.CurrentPlayerId,
+                TileId = Tile.Id
+            });
+            _turnManager.HideActionsPanel();
+        }
+
         public void OnPointerDown(PointerEventData eventData)
         {
             if (_ready)

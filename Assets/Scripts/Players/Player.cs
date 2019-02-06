@@ -1,4 +1,6 @@
-﻿namespace Assets.Scripts.Players
+﻿using Assets.Scripts.Map.Locations;
+
+namespace Assets.Scripts.Players
 {
     public class Player
     {
@@ -10,5 +12,7 @@
         public long Id { get; set; }
 
         public int Gold { get; set; } = 0;
+
+        public Farm Farms { get; set; }
     }
 }

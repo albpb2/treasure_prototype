@@ -6,7 +6,7 @@ namespace Assets.Scripts.Match.TurnActionsButtons
     {
         public override bool ShouldBeEnabled(Tile tile)
         {
-            return tile.IsUncovered && !tile.IsDigged;
+            return tile.IsUncovered && !tile.IsExploited;
         }
     }
 }

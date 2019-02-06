@@ -4,6 +4,7 @@ using Assets.Scripts.DB;
 using Assets.Scripts.DB.Documents;
 using Assets.Scripts.Infrastructure;
 using Assets.Scripts.Map;
+using Assets.Scripts.Match.Status.Entities;
 using Assets.Scripts.Match.Status.Entities.Match;
 using UnityEngine;
 
@@ -53,7 +54,8 @@ namespace Assets.Scripts.Match.Status
                 PlayerTokens = GetPlayerTokens().ToList(),
                 Players = GetPlayers().ToList(),
                 CurrentPlayer = _matchManager.CurrentPlayerIndex,
-                TurnPlayed = _turnManager.HasTurnBeenPlayed
+                TurnPlayed = _turnManager.HasTurnBeenPlayed,
+                Farms = GetFarms().ToList()
             };
         }
 
@@ -86,6 +88,16 @@ namespace Assets.Scripts.Match.Status
                 TileId = playerToken.Tile.Id,
                 Color = playerToken.Color
             });
+        }
+
+        private IEnumerable<Farm> GetFarms()
+        {
+            return Object.FindObjectsOfType<Map.Locations.Farm>().Select(
+                f => new Farm
+                {
+                    TileId = f.Tile.Id,
+                    PlayerId = f.PlayerId
+                });
         }
     }
 }

@@ -18,5 +18,12 @@ namespace Assets.Scripts.CommandHandlers
             player.Gold += gold;
             PlayerInfoPanel.SetPlayerInfo(MatchManager.CurrentPlayer, MatchManager.CurrentPlayerToken);
         }
+
+        protected void ReceiveGoldFromPlayer(int gold)
+        {
+            var player = MatchManager.CurrentPlayer;
+            player.Gold -= gold;
+            PlayerInfoPanel.SetPlayerInfo(MatchManager.CurrentPlayer, MatchManager.CurrentPlayerToken);
+        }
     }
 }

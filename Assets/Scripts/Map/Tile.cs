@@ -43,6 +43,10 @@ namespace Assets.Scripts.Map
 
         public bool IsDigged { get; private set; }
 
+        public bool HasFarm { get; private set; }
+
+        public bool IsExploited => IsDigged || HasFarm;
+
         public void Awake()
         {
             IsUncovered = false;
