@@ -1,7 +1,10 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.CommandHandlers;
 using Assets.Scripts.Commands;
 using Assets.Scripts.Map;
+using Assets.Scripts.Match.TurnActionsButtons;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -16,6 +19,7 @@ namespace Assets.Scripts.Match
         private MatchManager _matchManager;
         private CommandBus _commandBus;
         private TurnManager _turnManager;
+        private List<TurnActionsButton> _buttons;
         private bool _ready = false;
 
         public Tile Tile { get; set; }
@@ -31,6 +35,7 @@ namespace Assets.Scripts.Match
             _matchManager = FindObjectOfType<MatchManager>();
             _commandBus = FindObjectOfType<CommandBus>();
             _turnManager = FindObjectOfType<TurnManager>();
+            _buttons = FindObjectsOfType<TurnActionsButton>().ToList();
         }
 
         public void OnDisable()
@@ -92,9 +97,9 @@ namespace Assets.Scripts.Match
         {
             var interactable = !_turnManager.HasTurnBeenPlayed;
 
-            foreach (var button in GameObject.FindGameObjectsWithTag("TurnActionButton"))
+            foreach (var button in _buttons)
             {
-                button.GetComponent<Button>().interactable = interactable;
+                button.GetComponent<Button>().interactable = interactable && button.ShouldBeEnabled(Tile);
             }
         }
     }

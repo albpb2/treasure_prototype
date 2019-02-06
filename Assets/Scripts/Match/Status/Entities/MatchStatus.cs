@@ -10,5 +10,6 @@ namespace Assets.Scripts.Match.Status.Entities.Match
         public List<Tile> Tiles;
         public List<PlayerToken> PlayerTokens;
         public long CurrentPlayer;
+        public bool TurnPlayed;
     }
 }

@@ -13,14 +13,20 @@ namespace Assets.Scripts.Match.Status
     {
         private BoardManager _boardManager;
         private MatchManager _matchManager;
-        
-        public MatchStatusSaver(BoardManager boardManager, MatchManager matchManager)
+        private TurnManager _turnManager;
+
+        public MatchStatusSaver(
+            BoardManager boardManager,
+            MatchManager matchManager,
+            TurnManager turnManager)
         {
             ArgumentValidator.ValidateArgumentNotNull(boardManager, "boardManager");
+            ArgumentValidator.ValidateArgumentNotNull(matchManager, "matchManager");
             ArgumentValidator.ValidateArgumentNotNull(matchManager, "matchManager");
 
             _boardManager = boardManager;
             _matchManager = matchManager;
+            _turnManager = turnManager;
         }
 
         public void SaveStatus(string matchId)
@@ -46,7 +52,8 @@ namespace Assets.Scripts.Match.Status
                 Tiles = GetTiles().ToList(),
                 PlayerTokens = GetPlayerTokens().ToList(),
                 Players = GetPlayers().ToList(),
-                CurrentPlayer = _matchManager.CurrentPlayerIndex
+                CurrentPlayer = _matchManager.CurrentPlayerIndex,
+                TurnPlayed = _turnManager.HasTurnBeenPlayed
             };
         }
 

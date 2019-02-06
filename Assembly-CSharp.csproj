@@ -88,6 +88,8 @@
     <Compile Include="Assets\Scripts\Match\Status\Entities\Tile.cs" />
     <Compile Include="Assets\Scripts\Match\Status\MatchStatusLoader.cs" />
     <Compile Include="Assets\Scripts\Match\Status\MatchStatusSaver.cs" />
+    <Compile Include="Assets\Scripts\Match\TurnActionsButtons\DigButton.cs" />
+    <Compile Include="Assets\Scripts\Match\TurnActionsButtons\TurnActionsButton.cs" />
     <Compile Include="Assets\Scripts\Match\TurnActionsPanel.cs" />
     <Compile Include="Assets\Scripts\Match\TurnManager.cs" />
     <Compile Include="Assets\Scripts\Players\Player.cs" />

@@ -32,6 +32,7 @@ namespace Assets.Scripts.Match
         private BoardManager _boardManager;
         private MatchStatusSaver _matchStatusSaver;
         private TileFactory _tileFactory;
+        private TurnManager _turnManager;
         private int _currentPlayerIndex;
 
         public int CurrentPlayerIndex
@@ -78,7 +79,8 @@ namespace Assets.Scripts.Match
         public void Awake()
         {
             _boardManager = FindObjectOfType<BoardManager>();
-            _matchStatusSaver = new MatchStatusSaver(_boardManager, this);
+            _turnManager = FindObjectOfType<TurnManager>();
+            _matchStatusSaver = new MatchStatusSaver(_boardManager, this, _turnManager);
             _tileFactory = new TileFactory();
 
             Pause = true;
@@ -123,6 +125,11 @@ namespace Assets.Scripts.Match
             _boardManager.Tiles = RecreateTilesFromMatchStatus(matchStatus);
             
             _boardManager.PlayerTokens = RecreatePlayerTokensFromMatchStatus(matchStatus);
+
+            if (matchStatus.TurnPlayed)
+            {
+                _turnManager.PlayTurn();
+            }
         }
 
         private int GetNumberOfPlayers()
