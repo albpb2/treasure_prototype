@@ -39,7 +39,7 @@ namespace Assets.Scripts.Players
 
         public static PlayerToken CreatePlayerToken(long playerId, Color color, Tile tile)
         {
-            var baseObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            var baseObject = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
             baseObject.AddComponent<Collider>();
 
             var playerToken = baseObject.AddComponent<PlayerToken>();
