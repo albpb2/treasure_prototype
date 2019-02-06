@@ -159,6 +159,7 @@ namespace Assets.Scripts.Players
         private void ResetSelected()
         {
             Selected = false;
+            UpdateShader();
         }
     }
 }
