@@ -111,13 +111,17 @@ namespace Assets.Scripts.Map
 
             var playerToken = boardManager.FindPlayerToken(_matchManager.CurrentPlayerId);
 
-            var commandBus = FindObjectOfType<CommandBus>();
-
-            commandBus.ExecuteInThisTurn(new MovePlayerCommand
+            if (playerToken.Tile != null &&
+                IsAdjacentTo(playerToken.Tile))
             {
-                PlayerId = playerToken.PlayerId,
-                TileId = Id
-            });
+                var commandBus = FindObjectOfType<CommandBus>();
+
+                commandBus.ExecuteInThisTurn(new MovePlayerCommand
+                {
+                    PlayerId = playerToken.PlayerId,
+                    TileId = Id
+                });
+            }
         }
 
         private bool IsAdjacentTo(Tile tile)
