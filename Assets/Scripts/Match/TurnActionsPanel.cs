@@ -66,7 +66,7 @@ namespace Assets.Scripts.Match
 
         public void CreateFarm()
         {
-            _commandBus.ExecuteInThisTurn(new CreateFarmCommand()
+            _commandBus.ExecuteInThisTurn(new CreateFarmCommand
             {
                 PlayerId = _matchManager.CurrentPlayerId,
                 TileId = Tile.Id

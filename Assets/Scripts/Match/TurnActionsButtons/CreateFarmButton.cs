@@ -6,7 +6,9 @@ namespace Assets.Scripts.Match.TurnActionsButtons
     {
         public override bool ShouldBeEnabled(Tile tile)
         {
-            return tile.IsUncovered && !tile.IsExploited && _matchManager.CurrentPlayer.Gold >= _matchManager.FarmCost;
+            return tile.IsUncovered 
+                   && !tile.IsExploited 
+                   && _matchManager.CurrentPlayer.Gold >= _matchManager.FarmCost;
         }
     }
 }

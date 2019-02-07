@@ -1,6 +1,7 @@
 ﻿using System;
 using Assets.Scripts.CommandHandlers;
 using Assets.Scripts.Commands;
+using Assets.Scripts.Map.Locations;
 using Assets.Scripts.Match;
 using Assets.Scripts.Players;
 using UnityEngine;
@@ -43,7 +44,7 @@ namespace Assets.Scripts.Map
 
         public bool IsDigged { get; private set; }
 
-        public bool HasFarm { get; private set; }
+        public bool HasFarm => GetComponent<Farm>() != null;
 
         public bool IsExploited => IsDigged || HasFarm;
 
