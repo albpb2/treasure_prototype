@@ -36,6 +36,8 @@ namespace Assets.Scripts.Map.Locations
 
             farm.SetColor(ownerPlayerToken.Color);
 
+            farm.Start();
+
             return farm;
         }
 
@@ -43,9 +45,9 @@ namespace Assets.Scripts.Map.Locations
         {
             Tile = tile;
 
-            var originalLocalPosition = transform.localPosition;
             transform.parent = Tile.transform;
-            transform.localPosition = originalLocalPosition;
+            var locationsSettings = FindObjectOfType<LocationsSettings>();
+            transform.localPosition = locationsSettings.FarmLocalPosition;
         }
 
         public void SetColor(Color color)

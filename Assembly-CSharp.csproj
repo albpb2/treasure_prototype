@@ -82,6 +82,7 @@
     <Compile Include="Assets\Scripts\Map\BoardManager.cs" />
     <Compile Include="Assets\Scripts\Map\Hexagon.cs" />
     <Compile Include="Assets\Scripts\Map\Locations\Farm.cs" />
+    <Compile Include="Assets\Scripts\Map\Locations\LocationsSettings.cs" />
     <Compile Include="Assets\Scripts\Map\Tile.cs" />
     <Compile Include="Assets\Scripts\Map\TileFactory.cs" />
     <Compile Include="Assets\Scripts\Map\TileType.cs" />
