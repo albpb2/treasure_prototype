@@ -45,8 +45,8 @@ namespace Assets.Scripts.Match
 
         public void Enable(Tile tile)
         {
-            gameObject.SetActive(true);
             Tile = tile;
+            gameObject.SetActive(true);
         }
 
         public void Disable()
