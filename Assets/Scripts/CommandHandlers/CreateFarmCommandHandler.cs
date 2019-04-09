@@ -12,7 +12,7 @@ namespace Assets.Scripts.CommandHandlers
             
             var playerToken = BoardManager.FindPlayerToken(command.PlayerId);
             
-            Farm.Instantiate(tile, playerToken);
+            var farm = Farm.Instantiate(tile, playerToken);
 
             ReceiveGoldFromPlayer(MatchManager.FarmCost);
         }

@@ -44,7 +44,7 @@ namespace Assets.Scripts.Map
 
         public bool IsDigged { get; private set; }
 
-        public bool HasFarm => GetComponent<Farm>() != null;
+        public bool HasFarm => GetComponentInChildren<Farm>() != null;
 
         public bool IsExploited => IsDigged || HasFarm;
 

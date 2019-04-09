@@ -36,6 +36,8 @@ namespace Assets.Scripts.Map.Locations
 
             farm.SetColor(ownerPlayerToken.Color);
 
+            farm.PlayerId = ownerPlayerToken.PlayerId;
+
             farm.Start();
 
             return farm;
